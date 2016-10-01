@@ -1,0 +1,33 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/rowSkat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <include layout="@layout/rowskat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rowStich"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:visibility="gone" >
+
+        <include layout="@layout/rowstich" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row18Passe"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3" >
+
+        <include layout="@layout/row18passe" />
+    </LinearLayout>
+
+</merge>

@@ -1,0 +1,50 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageButton
+        android:id="@+id/card5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/utkr"
+        android:contentDescription="@string/button"
+        android:onClick="clickedCard" />
+
+    <ImageButton
+        android:id="@+id/card6"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/utkr"
+        android:contentDescription="@string/button"
+        android:onClick="clickedCard" />
+
+    <ImageButton
+        android:id="@+id/card7"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/utkr"
+        android:contentDescription="@string/button"
+        android:onClick="clickedCard" />
+
+    <ImageButton
+        android:id="@+id/card8"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/utkr"
+        android:contentDescription="@string/button"
+        android:onClick="clickedCard" />
+
+    <ImageButton
+        android:id="@+id/card9"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/utkr"
+        android:contentDescription="@string/button"
+        android:onClick="clickedCard" />
+
+</merge>

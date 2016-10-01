@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="HardcodedText" severity="ignore" />
+    <issue id="NestedWeights" severity="ignore" />
+    <issue id="TooManyViews" severity="ignore" />
+</lint>

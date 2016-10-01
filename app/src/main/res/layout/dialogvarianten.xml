@@ -1,0 +1,236 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogVarianten"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textVarianten"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="#Varianten" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <TextView
+            android:id="@+id/textRamsch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:text="#Ramsch" />
+
+        <Button
+            android:id="@+id/buttonRamschNein"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Nein" />
+
+        <Button
+            android:id="@+id/buttonRamschJa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Ja" />
+
+        <Button
+            android:id="@+id/buttonRamschImmer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Immer" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <TextView
+            android:id="@+id/textKontra"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:text="#Kontra" />
+
+        <Button
+            android:id="@+id/buttonVarKontraNein"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Nein" />
+
+        <Button
+            android:id="@+id/buttonVarKontraJa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Ja" />
+
+        <Button
+            android:id="@+id/buttonVarKontraAb18"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#ab 18" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:visibility="invisible" >
+
+        <TextView
+            android:id="@+id/textBock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:text="#Bock" />
+
+        <Button
+            android:id="@+id/buttonBockNein"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Nein" />
+
+        <Button
+            android:id="@+id/buttonBockJa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Ja" />
+
+        <Button
+            android:id="@+id/buttonBockRamsch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#+Ramsch" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:visibility="invisible" >
+
+        <TextView
+            android:id="@+id/textSpitze"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:text="#Spitze" />
+
+        <Button
+            android:id="@+id/buttonSpitzeNein"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Nein" />
+
+        <Button
+            android:id="@+id/buttonSpitzeJa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#Ja" />
+
+        <Button
+            android:id="@+id/buttonSpitzeZaehlt2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedToggle"
+            android:text="#zählt 2" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/buttonVariantenOK"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedVariantenOK"
+            android:text="#Weiter" />
+
+        <Button
+            android:id="@+id/buttonVariantenFertig"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:onClick="clickedVariantenFertig"
+            android:text="#Fertig" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+</LinearLayout>

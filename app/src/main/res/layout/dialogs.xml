@@ -1,0 +1,135 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/dialogSpielen"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogspielen" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogHand"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialoghand" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogSchieben"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogschieben" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogKlopfen"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogklopfen" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogVerdoppelt"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogverdoppelt" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogBuben"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogbuben" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogAnsage"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogansage" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogKontra"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogkontra" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogKontraRe"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogkontrare" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogReKontra"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogrekontra" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogFehler"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogfehler" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogUeberreizt"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogueberreizt" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dialogResult"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:visibility="gone" >
+
+        <include layout="@layout/dialogresult" />
+    </LinearLayout>
+
+</merge>
