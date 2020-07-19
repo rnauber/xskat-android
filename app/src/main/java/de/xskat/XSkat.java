@@ -18,9 +18,6 @@
 
 package de.xskat;
 
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +45,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.util.Locale;
 
 public class XSkat extends Activity {
 
@@ -155,17 +155,17 @@ public class XSkat extends Activity {
         if (phase == LETZTERSTICH) {
             restoreTrick();
         }
-        createMenu(menu, R.id.menuAbout, XT_Ueber_XSkat, true);
-        createMenu(menu, R.id.menuOptions, XT_Optionen, true);
-        createMenu(menu, R.id.menuLastTrick, XT_Letzter_Stich, phase == SPIELEN && stich > 1);
-        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? XT_Sortiere_fuer_Null : XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
-        createMenu(menu, R.id.menuList, XT_Liste, true);
+        createMenu(menu, R.id.menuAbout, Translations.XT_Ueber_XSkat, true);
+        createMenu(menu, R.id.menuOptions, Translations.XT_Optionen, true);
+        createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
+        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
+        createMenu(menu, R.id.menuList, Translations.XT_Liste, true);
         return super.onPrepareOptionsMenu(menu);
     }
 
     private void createMenu(Menu menu, int itemId, int translationKey, boolean enabled) {
         MenuItem mi = menu.findItem(itemId);
-        mi.setTitle(TE(translationKey));
+        mi.setTitle(getTranslation(translationKey));
         mi.setEnabled(enabled);
     }
 
