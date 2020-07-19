@@ -407,11 +407,7 @@ public class XSkat extends Activity {
             setDeselected(R.id.buttonVorschlaegeNein);
             setDeselected(R.id.buttonVorschlaegeJa);
             setSelected(view);
-            if (isSelected(R.id.buttonVorschlaegeNein)) {
-                hints[0] = false;
-            } else {
-                hints[0] = true;
-            }
+            hints[0] = !isSelected(R.id.buttonVorschlaegeNein);
             restore_hints();
         } else if (view == findViewById(R.id.buttonVonAndroido)
                 || view == findViewById(R.id.buttonVonMir)
@@ -690,13 +686,10 @@ public class XSkat extends Activity {
             setSelected(R.id.buttonBlattUOK);
             break;
         }
-        switch (alternate[0]) {
-        default:
-            setSelected(R.id.buttonBlattSortA);
-            break;
-        case 0:
+        if (alternate[0] == 0) {
             setSelected(R.id.buttonBlattSortS);
-            break;
+        } else {
+            setSelected(R.id.buttonBlattSortA);
         }
         setDialogsGone();
         setVisible(R.id.dialogBlatt);
@@ -1069,7 +1062,7 @@ public class XSkat extends Activity {
     Runnable takeTrick = null;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-    LayerDrawable drawnCard[] = null;
+    LayerDrawable[] drawnCard = null;
 
     final int[] cardNameUTU = { R.drawable.utka, R.drawable.uthe,
             R.drawable.utpi, R.drawable.utkr };
@@ -1232,7 +1225,7 @@ public class XSkat extends Activity {
     }
 
     void initCallback() {
-        final View v = (View) findViewById(R.id.card0);
+        final View v = findViewById(R.id.card0);
         ViewTreeObserver vto = v.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -1305,13 +1298,13 @@ public class XSkat extends Activity {
     }
 
     void drawCardOverlay(int x, int y, Drawable cardId, boolean delete) {
-        WindowManager wm = (WindowManager) activityContext
-                .getSystemService(WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) activityContext.getSystemService(WINDOW_SERVICE);
         if (inOnPause) {
             if (overlayView != null) {
                 try {
                     wm.removeView(overlayView);
-                } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException ignore) {
+                    // ignore
                 }
                 overlayView = null;
             }
@@ -1325,7 +1318,7 @@ public class XSkat extends Activity {
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
         layoutParams.format = PixelFormat.TRANSPARENT;
         layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
-        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
+        layoutParams.gravity = Gravity.START | Gravity.TOP;
         if (overlayView == null) {
             overlayView = new ImageView(activityContext);
             overlayView.setImageDrawable(cardId);
@@ -1335,10 +1328,8 @@ public class XSkat extends Activity {
             if (!delete) {
                 wm.updateViewLayout(overlayView, layoutParams);
             } else {
-                if (overlayView != null) {
-                    wm.removeView(overlayView);
-                    overlayView = null;
-                }
+                wm.removeView(overlayView);
+                overlayView = null;
             }
         }
     }
@@ -1442,7 +1433,7 @@ public class XSkat extends Activity {
         TextView v = (TextView) findViewById(id);
         float h = cardHeight / 5.0f;
         float w = cardWidth / 4.5f;
-        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, h < w ? h : w);
+        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.min(h, w));
         v.setGravity(Gravity.CENTER);
     }
 
@@ -1450,7 +1441,7 @@ public class XSkat extends Activity {
         TextView v = (TextView) findViewById(id);
         float h = cardHeight / 5.0f * 1.2f;
         float w = cardWidth / 4.5f * 1.2f;
-        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, h < w ? h : w);
+        v.setTextSize(TypedValue.COMPLEX_UNIT_PX, Math.min(h, w));
         v.setTypeface(null, Typeface.BOLD);
         v.setGravity(Gravity.CENTER);
     }
@@ -1726,7 +1717,7 @@ public class XSkat extends Activity {
         int flags = -1;
         try {
             flags = getPackageManager().getPackageInfo(getPackageName(), 0).applicationInfo.flags;
-        } catch (NameNotFoundException e) {
+        } catch (NameNotFoundException ignore) {
         }
         setText(R.id.dialogCP1, "XSkat "
                 + xskatVersion
@@ -1887,7 +1878,7 @@ public class XSkat extends Activity {
     }
 
     void setSelected(View view) {
-        view.setTag((Object) (1));
+        view.setTag(1);
         ((TextView) view).setTextColor(Color.WHITE);
         view.setBackgroundResource(R.drawable.buttonsel);
         view.invalidate();
@@ -2535,7 +2526,6 @@ public class XSkat extends Activity {
         }
     }
 
-    @SuppressWarnings("deprecation")
     void setBackgroundDrawable(View v, Drawable d) {
         v.setBackgroundDrawable(d);
     }
@@ -2808,22 +2798,17 @@ public class XSkat extends Activity {
             schenken = p.schenken;
             savseed = p.savseed;
             anspiel = new int[10];
-            for (int i = 0; i < 10; i++)
-                anspiel[i] = p.anspiel[i];
+            System.arraycopy(p.anspiel, 0, anspiel, 0, 10);
             gemacht = new int[10];
-            for (int i = 0; i < 10; i++)
-                gemacht[i] = p.gemacht[i];
+            System.arraycopy(p.gemacht, 0, gemacht, 0, 10);
             verdopp = new int[3];
-            for (int i = 0; i < 3; i++)
-                verdopp[i] = p.verdopp[i];
+            System.arraycopy(p.verdopp, 0, verdopp, 0, 3);
             stiche = new int[10][3];
             for (int i = 0; i < 10; i++)
-                for (int j = 0; j < 3; j++)
-                    stiche[i][j] = p.stiche[i][j];
+                System.arraycopy(p.stiche[i], 0, stiche[i], 0, 3);
             skat = new int[4][2];
             for (int i = 0; i < 4; i++)
-                for (int j = 0; j < 2; j++)
-                    skat[i][j] = p.skat[i][j];
+                System.arraycopy(p.skat[i], 0, skat[i], 0, 2);
         }
 
         void save(String p) {
@@ -2886,7 +2871,7 @@ public class XSkat extends Activity {
                     skat[i][j] = prefs.getInt(p + "skat" + i + "." + j, 0);
 
         }
-    };
+    }
 
     structprot prot1 = new structprot(), prot2 = new structprot();
 
@@ -2896,10 +2881,10 @@ public class XSkat extends Activity {
     int[][] sgewoverl = new int[3][2];
     int[][] splsum = new int[3][3];
 
-    class structsplist {
+    static class structsplist {
         int s, e;
         boolean r, d, g;
-    };
+    }
 
     final int LIST_LEN = 9;
     structsplist[] splist = new structsplist[LIST_LEN];
@@ -3752,9 +3737,7 @@ public class XSkat extends Activity {
             if (inhand[i][AS] && i != trumpf)
                 as++;
         }
-        if (t[trumpf] + bb > 7 && as != 0)
-            return true;
-        return false;
+        return t[trumpf] + bb > 7 && as != 0;
     }
 
     boolean druecken(boolean x, int[] p, int[] t, int T, int N, int C1, int C2) {
@@ -4226,9 +4209,7 @@ public class XSkat extends Activity {
             return false;
         if (f1 == f2)
             return w1 < w2;
-        if (f2 == trumpf)
-            return false;
-        return true;
+        return f2 != trumpf;
     }
 
     void calc_result() {
@@ -4429,12 +4410,12 @@ public class XSkat extends Activity {
         }
     }
 
-    void modsum(int sm[][], int gv[][], int p) {
+    void modsum(int[][] sm, int[][] gv, int p) {
         int[] ret = new int[4];
         modsum(sm, gv, p, ret);
     }
 
-    void modsum(int sm[][], int gv[][], int p, int[] ret) {
+    void modsum(int[][] sm, int[][] gv, int p, int[] ret) {
         int s, e;
         boolean r, d;
 
@@ -4650,7 +4631,7 @@ public class XSkat extends Activity {
             if (j != 0)
                 possc = j;
             else
-                hatnfb[s][f1 > 4 ? 4 : f1] = 1;
+                hatnfb[s][Math.min(f1, 4)] = 1;
         }
     }
 
@@ -4952,9 +4933,7 @@ public class XSkat extends Activity {
         ci = cards[possi[playcd]];
         if ((ci & 7) <= ZEHN || (ci & 7) == BUBE)
             return false;
-        if (ci >> 3 == trumpf)
-            return true;
-        return false;
+        return ci >> 3 == trumpf;
     }
 
     int niedrighoch(int f) {
@@ -5449,13 +5428,13 @@ public class XSkat extends Activity {
         if (spieler == ausspl) {
             if ((fb == trumpf
                     && (trumpf < 4 ? gespcd[trumpf << 3 | AS] == 2 : false)
-                    && gespcd[0 << 3 | BUBE] == 2 && gespcd[1 << 3 | BUBE] == 2
+                    && gespcd[0 | BUBE] == 2 && gespcd[1 << 3 | BUBE] == 2
                     && gespcd[2 << 3 | BUBE] == 2 && gespcd[3 << 3 | BUBE] == 2 && rnd(1) > 0)
                     || ((stcd[0] & 7) == BUBE && gespcd[2 << 3 | BUBE] == 2 && gespcd[3 << 3
                             | BUBE] != 2)
                     || higher(stcd[0], high[fb])
                     || (hatnfb[mi][fb] == 1 && hatnfb[mi][trumpf] == 1)
-                    || (trumpf == 4 && (stcd[0] & 7) != BUBE && (gespcd[0 << 3
+                    || (trumpf == 4 && (stcd[0] & 7) != BUBE && (gespcd[0
                             | BUBE] == 2
                             || gespcd[1 << 3 | BUBE] == 2
                             || gespcd[2 << 3 | BUBE] == 2 || gespcd[3 << 3
@@ -5463,16 +5442,13 @@ public class XSkat extends Activity {
                     || (cardw[stcd[0] & 7] > 4 && rnd(1) > 0))
                 return false;
             if (butternok != 0)
-                return rnd(1) == 0 ? false : true;
+                return rnd(1) != 0;
             butternok = rnd(1);
             return true;
         }
         if (higher(stcd[0], high[trumpf]) && higher(stcd[0], high[fb]))
             return true;
-        if (higher(stcd[0], high[fb]) && hatnfb[spieler][fb] == 0) {
-            return true;
-        }
-        return false;
+        return higher(stcd[0], high[fb]) && hatnfb[spieler][fb] == 0;
     }
 
     boolean hatas() {
@@ -5818,7 +5794,7 @@ public class XSkat extends Activity {
     }
 
     void main() {
-        setrnd(0, savseed = (int) (new Date().getTime() & 0xffffffff));
+        setrnd(0, savseed = (int) (new Date().getTime()));
         numsp = 1;
         geber = 0;
         read_list();
@@ -6023,7 +5999,7 @@ public class XSkat extends Activity {
                     || (cards[possi[i]] >> 3 == fb && kleiner(i, j) ^ f))
                 j = i;
         }
-        return j < 0 ? 0 : j;
+        return Math.max(j, 0);
     }
 
     int drunter(boolean f) {
@@ -6177,7 +6153,7 @@ public class XSkat extends Activity {
                 if (nsc != 0) {
                     null_sort(sp, spc);
                     null_sort(ns, nsc);
-                    cnt = nsc < spc ? nsc : spc;
+                    cnt = Math.min(nsc, spc);
                     for (i = 0; i < cnt; i++) {
                         if (kleiner_w(ns[i], sp[i])) {
                             ufb[0] = fb;
@@ -6343,7 +6319,7 @@ public class XSkat extends Activity {
         if (stich != 9 || possc != 2 || ((c0 = cards[possi[0]]) & 7) != BUBE
                 || ((c1 = cards[possi[1]]) & 7) != BUBE)
             return false;
-        gespb = (gespcd[0 << 3 | BUBE] == 2 ? 1 : 0)
+        gespb = (gespcd[0 | BUBE] == 2 ? 1 : 0)
                 + (gespcd[1 << 3 | BUBE] == 2 ? 1 : 0)
                 + (gespcd[2 << 3 | BUBE] == 2 ? 1 : 0)
                 + (gespcd[3 << 3 | BUBE] == 2 ? 1 : 0);
@@ -6455,7 +6431,7 @@ public class XSkat extends Activity {
         le[0] = 0;
         if (hatnfb[left(ausspl + vmh)][fb] == 1
                 && hatnfb[right(ausspl + vmh)][fb] == 1) {
-            return true;
+            return false;
         }
         mkz = akz = 0;
         for (i = 7; i >= 0; i--) {
@@ -6486,9 +6462,9 @@ public class XSkat extends Activity {
             if (mkz == 1 && (cards[possi[pc[0]]] & 7) > ZEHN) {
                 le[0] = 1;
             }
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     void moeglklein() {
@@ -6563,7 +6539,7 @@ public class XSkat extends Activity {
                             w1 = 30 + (cards[possi[pc]] >> 3);
                         } else {
                             w1 = 7 - (cards[possi[pc]] & 7);
-                            if (!sicher(cards[possi[pc]] >> 3, pcl, le)) {
+                            if (sicher(cards[possi[pc]] >> 3, pcl, le)) {
                                 w1 += 10;
                             }
                         }
@@ -6571,7 +6547,7 @@ public class XSkat extends Activity {
                             w2 = 30 + (cards[possi[playcd]] >> 3);
                         } else {
                             w2 = 7 - (cards[possi[playcd]] & 7);
-                            if (!sicher(cards[possi[playcd]] >> 3, pcl, le)) {
+                            if (sicher(cards[possi[playcd]] >> 3, pcl, le)) {
                                 w2 += 10;
                             }
                         }
@@ -6612,7 +6588,7 @@ public class XSkat extends Activity {
                 break;
             }
         }
-        if (((stcd[0] & 7) == BUBE && ((hatnfb[left(ausspl)][4] == 1 && hatnfb[right(ausspl)][4] == 1) || (gespcd[0 << 3
+        if (((stcd[0] & 7) == BUBE && ((hatnfb[left(ausspl)][4] == 1 && hatnfb[right(ausspl)][4] == 1) || (gespcd[0
                 | BUBE] == 2
                 && gespcd[1 << 3 | BUBE] == 2 && gespcd[2 << 3 | BUBE] == 2 && gespcd[3 << 3
                 | BUBE] == 2)))
@@ -6657,7 +6633,7 @@ public class XSkat extends Activity {
         f = false;
         lef = 0;
         for (fb = 0; fb < 4; fb++) {
-            if (!sicher(fb, pc, le)) {
+            if (sicher(fb, pc, le)) {
                 if (f) {
                     if (le[0] > lef
                             || (rswert[cards[possi[pc[0]]] & 7] > rswert[cards[possi[playcd]] & 7] && le[0] >= lef)) {
@@ -6713,7 +6689,7 @@ public class XSkat extends Activity {
         n = 0;
         for (fb = 0; fb < 4; fb++) {
             s[fb] = 1;
-            if (!sicher(fb, pc, le)) {
+            if (sicher(fb, pc, le)) {
                 s[fb] = 0;
                 n++;
             }
