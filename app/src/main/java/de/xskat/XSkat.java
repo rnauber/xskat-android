@@ -18,9 +18,6 @@
 
 package de.xskat;
 
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +45,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.util.Locale;
 
 public class XSkat extends Activity {
 
@@ -8050,6 +8050,7 @@ public class XSkat extends Activity {
     }
 
     private String getTranslation(int key) {
+
         return Translations.getTranslation(key, currLang);
     }
 }
