@@ -18,9 +18,6 @@
 
 package de.xskat;
 
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +45,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.util.Locale;
 
 public class XSkat extends Activity {
 
@@ -112,36 +112,41 @@ public class XSkat extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.menuAbout:
-            di_copyr();
-            return true;
-        case R.id.menuOptions:
-            setSelected(R.id.buttonStaerkePP + strateg[0]);
-            setSelected(R.id.buttonSpracheDE + currLang);
-            if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0)
-                setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
-            else
-                setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Liste));
-            setGone(R.id.mainScreen);
-            setGone(R.id.dialogProto);
-            setGone(R.id.dialogListe);
-            setGone(R.id.dialogLoeschen);
-            setDialogsGone();
-            setVisible(R.id.dialogOptions);
-            setVisible(R.id.dialogScreen);
-            return true;
-        case R.id.menuLastTrick:
-            phase = LETZTERSTICH;
-            drawcard(0, prot2.stiche[stich - 2][0], 3, -1);
-            drawcard(0, prot2.stiche[stich - 2][1], 2, -1);
-            drawcard(0, prot2.stiche[stich - 2][2], 4, -1);
-            return true;
-        case R.id.menuSort:
-            sort2[0] ^= 1;
-            initscr(0, 1);
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+            case R.id.menuAbout:
+                showDialogFromMenu(R.id.dialogCopyright);
+                return true;
+            case R.id.menuOptions:
+                setSelected(R.id.buttonStaerkePP + strateg[0]);
+                setSelected(R.id.buttonSpracheDE + currLang);
+                if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0) {
+                    setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
+                } else {
+                    setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Liste));
+                }
+                setGone(R.id.mainScreen);
+                setGone(R.id.dialogProto);
+                setGone(R.id.dialogListe);
+                setGone(R.id.dialogLoeschen);
+                setDialogsGone();
+                setVisible(R.id.dialogOptions);
+                setVisible(R.id.dialogScreen);
+                return true;
+            case R.id.menuLastTrick:
+                phase = LETZTERSTICH;
+                drawcard(0, prot2.stiche[stich - 2][0], 3, -1);
+                drawcard(0, prot2.stiche[stich - 2][1], 2, -1);
+                drawcard(0, prot2.stiche[stich - 2][2], 4, -1);
+                return true;
+            case R.id.menuSort:
+                sort2[0] ^= 1;
+                initscr(0, 1);
+                return true;
+            case R.id.menuList:
+                di_liste(0, true);
+                showDialogFromMenu(R.id.dialogListe);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -150,18 +155,18 @@ public class XSkat extends Activity {
         if (phase == LETZTERSTICH) {
             restoreTrick();
         }
-        MenuItem mi = menu.findItem(R.id.menuAbout);
-        mi.setTitle(getTranslation(Translations.XT_Ueber_XSkat));
-        mi = menu.findItem(R.id.menuOptions);
-        mi.setTitle(getTranslation(Translations.XT_Optionen));
-        mi = menu.findItem(R.id.menuLastTrick);
-        mi.setEnabled(phase == SPIELEN && stich > 1);
-        mi.setTitle(getTranslation(Translations.XT_Letzter_Stich));
-        mi = menu.findItem(R.id.menuSort);
-        mi.setEnabled(phase < SPIELEN && trumpf != 5);
-        mi.setTitle(sort2[0] == 0 ? getTranslation(Translations.XT_Sortiere_fuer_Null)
-                : getTranslation(Translations.XT_Sortiere_normal));
+        createMenu(menu, R.id.menuAbout, Translations.XT_Ueber_XSkat, true);
+        createMenu(menu, R.id.menuOptions, Translations.XT_Optionen, true);
+        createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
+        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
+        createMenu(menu, R.id.menuList, Translations.XT_Liste, true);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void createMenu(Menu menu, int itemId, int translationKey, boolean enabled) {
+        MenuItem mi = menu.findItem(itemId);
+        mi.setTitle(getTranslation(translationKey));
+        mi.setEnabled(enabled);
     }
 
     public void clickedCard(View view) {
@@ -1238,8 +1243,9 @@ public class XSkat extends Activity {
                     if (restart) {
                         readViews();
                     } else {
-                        if (firstgame)
-                            di_copyr();
+                        if (firstgame) {
+                            showDialog(R.id.dialogCopyright);
+                        }
                         put_box(sager);
                         put_box(hoerer);
                     }
@@ -7497,13 +7503,13 @@ public class XSkat extends Activity {
         setVisible(R.id.dialogResult);
     }
 
-    void di_copyr() {
+    void showDialogFromMenu(int id) {
         setGone(R.id.mainScreen);
         setGone(R.id.dialogProto);
         setGone(R.id.dialogListe);
         setGone(R.id.dialogLoeschen);
         setDialogsGone();
-        setVisible(R.id.dialogCopyright);
+        setVisible(id);
         setVisible(R.id.dialogScreen);
     }
 

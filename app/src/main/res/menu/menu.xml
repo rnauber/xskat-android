@@ -16,5 +16,8 @@
         android:id="@+id/menuSort"
         android:showAsAction="never"
         android:title="#Sortiere für Null"/>
-
+    <item
+        android:id="@+id/menuList"
+        android:showAsAction="never"
+        android:title="#Liste"/>
 </menu>
