@@ -1155,7 +1155,9 @@ public class XSkat extends Activity {
                     R.id.sp1st9 },
             { R.id.sp2st0, R.id.sp2st1, R.id.sp2st2, R.id.sp2st3, R.id.sp2st4,
                     R.id.sp2st5, R.id.sp2st6, R.id.sp2st7, R.id.sp2st8,
-                    R.id.sp2st9 } };
+                    R.id.sp2st9 },
+            {R.id.sum0, R.id.sum1, R.id.sum2, R.id.sum3, R.id.sum4, R.id.sum5, R.id.sum6, R.id.sum7, R.id.sum8, R.id.sum9}
+    };
     final int[][] liMat = {
             { R.id.li0sp0, R.id.li0sp1, R.id.li0sp2, R.id.li0sp3, R.id.li0sp4,
                     R.id.li0sp5, R.id.li0sp6, R.id.li0sp7, R.id.li0sp8,
@@ -1620,6 +1622,16 @@ public class XSkat extends Activity {
         setTextSize(R.id.sp2st7);
         setTextSize(R.id.sp2st8);
         setTextSize(R.id.sp2st9);
+        setTextSize(R.id.sum0);
+        setTextSize(R.id.sum1);
+        setTextSize(R.id.sum2);
+        setTextSize(R.id.sum3);
+        setTextSize(R.id.sum4);
+        setTextSize(R.id.sum5);
+        setTextSize(R.id.sum6);
+        setTextSize(R.id.sum7);
+        setTextSize(R.id.sum8);
+        setTextSize(R.id.sum9);
         setTextSize(R.id.textImSkatIst1);
         setTextSize(R.id.textImSkatIst2);
         setTextSize(R.id.textImSkatIst3);
@@ -7355,12 +7367,18 @@ public class XSkat extends Activity {
         if (prot1.trumpf >= 4 && prot1.spwert == 0) {
             b0 = b1 = b2 = false;
         }
+        // the header of the alone player get bold
         TextView v = (TextView) findViewById(R.id.sp0head);
         v.setTypeface(null, b0 ? Typeface.BOLD : Typeface.NORMAL);
         v = (TextView) findViewById(R.id.sp1head);
         v.setTypeface(null, b1 ? Typeface.BOLD : Typeface.NORMAL);
         v = (TextView) findViewById(R.id.sp2head);
         v.setTypeface(null, b2 ? Typeface.BOLD : Typeface.NORMAL);
+        v = (TextView) findViewById(R.id.sumhead);
+        v.setTypeface(null, Typeface.NORMAL);
+
+        int allein = cardw[prot1.skat[1][0] & 7] + cardw[prot1.skat[1][1] & 7];
+        int gegen = 0;
         for (i = 0; i < 10; i++) {
             for (s = 0; s < 3; s++) {
                 if (protsort[sn]) {
@@ -7406,6 +7424,22 @@ public class XSkat extends Activity {
                     txt += e == 2 ? "_" : "";
                 }
                 tv.setText(txt);
+            }
+            TextView tv = (TextView) findViewById(spMat[3][i]);
+            if (tv != null) {
+                if (protsort[sn] || prot1.trumpf < 0) {
+                    tv.setText("");
+                } else {
+                    int wert = cardw[stiche[i][0] & 7] + cardw[stiche[i][1] & 7] + cardw[stiche[i][2] & 7];
+                    if (prot1.spieler == prot1.gemacht[i]) {
+                        allein += wert;
+                    } else {
+                        gegen += wert;
+                    }
+                    tv.setTypeface(null, allein > 60 || gegen >= 60 ? Typeface.BOLD : Typeface.NORMAL);
+                    String txt = allein + " / " + gegen;
+                    tv.setText(txt);
+                }
             }
         }
         im_skat(protsort[sn] ? 0 : 1);
