@@ -261,6 +261,79 @@
                 android:layout_weight="1"
                 android:text="" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sumhead"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text=""/>
+            <TextView
+                android:id="@+id/sum0"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x0" />
+            <TextView
+                android:id="@+id/sum1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x1" />
+            <TextView
+                android:id="@+id/sum2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x2" />
+            <TextView
+                android:id="@+id/sum3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x3" />
+            <TextView
+                android:id="@+id/sum4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x4" />
+            <TextView
+                android:id="@+id/sum5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x5" />
+            <TextView
+                android:id="@+id/sum6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x6" />
+            <TextView
+                android:id="@+id/sum7"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x7" />
+            <TextView
+                android:id="@+id/sum8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x8" />
+            <TextView
+                android:id="@+id/sum9"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="x9" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
