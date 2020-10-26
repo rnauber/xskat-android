@@ -2787,7 +2787,9 @@ public class XSkat extends Activity {
 
     class structprot {
         boolean gewonn, handsp, spitze, revolution;
-        int stichgem, spieler, trumpf, gereizt, augen, spwert, ehsso, sramsch,
+        int stichgem, spieler;
+        int trumpf; // -1=Null, 0=Diamonds, 1=Hearts, 4=Grand, 5=Ramsch
+        int gereizt, augen, spwert, ehsso, sramsch,
                 rotateby, schenken, savseed;
         int[] anspiel = new int[10], gemacht = new int[10],
                 verdopp = new int[3];
@@ -7383,8 +7385,12 @@ public class XSkat extends Activity {
         v = (TextView) findViewById(R.id.sumhead);
         v.setTypeface(null, Typeface.NORMAL);
 
-        int allein = cardw[prot1.skat[1][0] & 7] + cardw[prot1.skat[1][1] & 7];
-        int gegen = 0;
+        int[] points = new int[]{0, 0, 0};
+        int skat = cardw[prot1.skat[1][0] & 7] + cardw[prot1.skat[1][1] & 7];
+        if (prot1.trumpf != 5) {
+            // if it is not Ramsch add the points for the skat to the single player
+            points[prot1.spieler] = skat;
+        }
         for (i = 0; i < 10; i++) {
             for (s = 0; s < 3; s++) {
                 if (protsort[sn]) {
@@ -7433,17 +7439,35 @@ public class XSkat extends Activity {
             }
             TextView tv = (TextView) findViewById(spMat[3][i]);
             if (tv != null) {
+                int trick = cardw[stiche[i][0] & 7] + cardw[stiche[i][1] & 7] + cardw[stiche[i][2] & 7];
+                points[prot1.gemacht[i]] += trick;
                 if (protsort[sn] || prot1.trumpf < 0) {
                     tv.setText("");
-                } else {
-                    int wert = cardw[stiche[i][0] & 7] + cardw[stiche[i][1] & 7] + cardw[stiche[i][2] & 7];
-                    if (prot1.spieler == prot1.gemacht[i]) {
-                        allein += wert;
-                    } else {
-                        gegen += wert;
+                } else if (prot1.trumpf > 4) {
+                    if (i == 9) {
+                        // decide who will get the skat
+                        if (rskatloser != 0) { // the loser of the round
+                            points[Util.getIndexOfLargestValue(points)] += skat;
+                        } else { // the one how received the last trick
+                            points[prot1.gemacht[9]] += skat;
+                        }
                     }
-                    tv.setTypeface(null, allein > 60 || gegen >= 60 ? Typeface.BOLD : Typeface.NORMAL);
-                    String txt = allein + " / " + gegen;
+                    String txt = points[0] + " / " + points[1] + " / " + points[2];
+                    tv.setTypeface(null, Typeface.NORMAL);
+                    tv.setText(txt);
+                } else {
+                    int gegen;
+                    if (prot1.spieler == 0) {
+                        gegen = points[1] + points[2];
+                    } else if (prot1.spieler == 1) {
+                        gegen = points[0] + points[2];
+                    } else if (prot1.spieler == 2) {
+                        gegen = points[0] + points[1];
+                    } else {
+                        throw new IllegalStateException("Cannot compute points as there is an illegal player number.");
+                    }
+                    tv.setTypeface(null, points[prot1.spieler] > 60 || gegen >= 60 ? Typeface.BOLD : Typeface.NORMAL);
+                    String txt = points[prot1.spieler] + " / " + gegen;
                     tv.setText(txt);
                 }
             }
