@@ -1726,12 +1726,14 @@ public class XSkat extends Activity {
         setTextSize(R.id.dialogCP4);
         setTextSize(R.id.dialogCP5);
         setDeselectedAndSize(R.id.buttonCopyrightOK);
-        int flags = -1;
+        int flags;
         try {
             flags = getPackageManager().getPackageInfo(getPackageName(), 0).applicationInfo.flags;
         } catch (NameNotFoundException ignore) {
+            flags = -1;
         }
-        setText(R.id.dialogCP1, "XSkat "
+        String appName = getResources().getString(R.string.app_name);
+        setText(R.id.dialogCP1, appName + " "
                 + xskatVersion
                 + (de.xskat.BuildConfig.DEBUG ? " beta" : "")
                 + ((flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 ? " debug"

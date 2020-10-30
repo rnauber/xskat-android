@@ -1,9 +1,7 @@
 package de.xskat;
 
+@Deprecated // use correct I18n, e.g. String appName = getResources().getString(R.string.app_name);
 public class Translations {
-    // --------------------------------------------------------------------------------------
-    // File text.c
-    // --------------------------------------------------------------------------------------
 
     private final static String[][] TRANSLATIONS = { // DE, EN
             {"Null", "Null"}, // XT_Null
