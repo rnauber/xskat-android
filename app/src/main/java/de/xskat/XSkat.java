@@ -119,9 +119,9 @@ public class XSkat extends Activity {
                 setSelected(R.id.buttonStaerkePP + strateg[0]);
                 setSelected(R.id.buttonSpracheDE + currLang);
                 if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0) {
-                    setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
+                    setText(R.id.buttonOptionsListe, getTranslation(R.string.XT_Protokoll));
                 } else {
-                    setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Liste));
+                    setText(R.id.buttonOptionsListe, getTranslation(R.string.XT_Liste));
                 }
                 setGone(R.id.mainScreen);
                 setGone(R.id.dialogProto);
@@ -155,11 +155,11 @@ public class XSkat extends Activity {
         if (phase == LETZTERSTICH) {
             restoreTrick();
         }
-        createMenu(menu, R.id.menuAbout, Translations.XT_Ueber_XSkat, true);
-        createMenu(menu, R.id.menuOptions, Translations.XT_Optionen, true);
-        createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
-        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
-        createMenu(menu, R.id.menuList, Translations.XT_Liste, true);
+        createMenu(menu, R.id.menuAbout, R.string.XT_Ueber_XSkat, true);
+        createMenu(menu, R.id.menuOptions, R.string.XT_Optionen, true);
+        createMenu(menu, R.id.menuLastTrick, R.string.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
+        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? R.string.XT_Sortiere_fuer_Null : R.string.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
+        createMenu(menu, R.id.menuList, R.string.XT_Liste, true);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -1294,7 +1294,7 @@ public class XSkat extends Activity {
 
     String gameName(int n) {
         if (spBlatt == 2 && 0 <= n && n <= 3) {
-            return getTranslation(Translations.XT_Schellen + n);
+            return getTranslation(R.string.XT_Schellen + n);
         }
         return getTranslation(n + 1);
     }
@@ -1449,6 +1449,8 @@ public class XSkat extends Activity {
     }
 
     void initDialogs() {
+        Locale.setDefault(currLang == 0 ? Locale.GERMAN : Locale.ENGLISH);
+
         setDeselectedAndSize(R.id.buttonKaro);
         setDeselectedAndSize(R.id.buttonHerz);
         setDeselectedAndSize(R.id.buttonPik);
@@ -1467,14 +1469,14 @@ public class XSkat extends Activity {
         setText(R.id.buttonHerz, gameName(1));
         setText(R.id.buttonPik, gameName(2));
         setText(R.id.buttonKreuz, gameName(3));
-        setText(R.id.buttonNull, getTranslation(Translations.XT_Null));
-        setText(R.id.buttonGrand, getTranslation(Translations.XT_Grand));
-        setText(R.id.buttonSchneider, getTranslation(Translations.XT_Schneider));
-        setText(R.id.buttonSchwarz, getTranslation(Translations.XT_Schwarz));
-        setText(R.id.buttonOuvert, getTranslation(Translations.XT_Ouvert));
-        setText(R.id.buttonSpitze, getTranslation(Translations.XT_Spitze));
-        setText(R.id.buttonSpielen, getTranslation(Translations.XT_Spielen));
-        setText(R.id.buttonRevolution, getTranslation(Translations.XT_Revolution));
+        setText(R.id.buttonNull, getTranslation(R.string.XT_Null));
+        setText(R.id.buttonGrand, getTranslation(R.string.XT_Grand));
+        setText(R.id.buttonSchneider, getTranslation(R.string.XT_Schneider));
+        setText(R.id.buttonSchwarz, getTranslation(R.string.XT_Schwarz));
+        setText(R.id.buttonOuvert, getTranslation(R.string.XT_Ouvert));
+        setText(R.id.buttonSpitze, getTranslation(R.string.XT_Spitze));
+        setText(R.id.buttonSpielen, getTranslation(R.string.XT_Spielen));
+        setText(R.id.buttonRevolution, getTranslation(R.string.XT_Revolution));
         if (phase == ANSAGEN)
             initSpielStr();
 
@@ -1482,33 +1484,33 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonHandJa);
         setDeselectedAndSize(R.id.buttonHandNein);
         setTextSize(R.id.textGereiztHand);
-        setText(R.id.textHand, getTranslation(Translations.XT_HandFrage));
-        setText(R.id.buttonHandJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonHandNein, getTranslation(Translations.XT_Nein));
+        setText(R.id.textHand, getTranslation(R.string.XT_HandFrage));
+        setText(R.id.buttonHandJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonHandNein, getTranslation(R.string.XT_Nein));
         if (phase == HANDSPIEL)
             initHandStr();
 
         setTitleTextSize(R.id.textSkatAufnehmen);
         setDeselectedAndSize(R.id.buttonAufnehmenJa);
         setDeselectedAndSize(R.id.buttonAufnehmenNein);
-        setText(R.id.textSkatAufnehmen, getTranslation(Translations.XT_Skat_aufnehmen));
-        setText(R.id.buttonAufnehmenJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonAufnehmenNein, getTranslation(Translations.XT_Nein));
+        setText(R.id.textSkatAufnehmen, getTranslation(R.string.XT_Skat_aufnehmen));
+        setText(R.id.buttonAufnehmenJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonAufnehmenNein, getTranslation(R.string.XT_Nein));
 
         setTitleTextSize(R.id.textVerdoppelt);
         setTextSize(R.id.textWerSchiebt);
         setTextSize(R.id.textSchiebt);
-        setText(R.id.textVerdoppelt, getTranslation(Translations.XT_Spielwert_verdoppelt));
+        setText(R.id.textVerdoppelt, getTranslation(R.string.XT_Spielwert_verdoppelt));
         setDeselectedAndSize(R.id.buttonSchiebenOK);
-        setText(R.id.buttonSchiebenOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonSchiebenOK, getTranslation(R.string.XT_Weiter));
         if (phase == DRUECKEN)
             initVerdoppeltStr();
 
         setTitleTextSize(R.id.textBuben);
         setTextSize(R.id.textDuerfenNicht);
         setDeselectedAndSize(R.id.buttonBubenOK);
-        setText(R.id.textDuerfenNicht, getTranslation(Translations.XT_duerfen_nicht_geschoben_werden));
-        setText(R.id.buttonBubenOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.textDuerfenNicht, getTranslation(R.string.XT_duerfen_nicht_geschoben_werden));
+        setText(R.id.buttonBubenOK, getTranslation(R.string.XT_Weiter));
         if (phase == DRUECKEN)
             initBubenStr();
 
@@ -1516,7 +1518,7 @@ public class XSkat extends Activity {
         setTitleTextSize(R.id.textSpieltWas);
         setTextSize(R.id.textFuer);
         setDeselectedAndSize(R.id.buttonAnsageOK);
-        setText(R.id.buttonAnsageOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonAnsageOK, getTranslation(R.string.XT_Weiter));
         if (phase == ANSAGEN)
             initAnsageStr();
 
@@ -1525,8 +1527,8 @@ public class XSkat extends Activity {
         setTextSize(R.id.textKontraFuer);
         setDeselectedAndSize(R.id.buttonKontraJa);
         setDeselectedAndSize(R.id.buttonKontraNein);
-        setText(R.id.buttonKontraJa, getTranslation(Translations.XT_Kontra));
-        setText(R.id.buttonKontraNein, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonKontraJa, getTranslation(R.string.XT_Kontra));
+        setText(R.id.buttonKontraNein, getTranslation(R.string.XT_Weiter));
         if (phase == ANSAGEN)
             initKontraStr();
 
@@ -1534,9 +1536,9 @@ public class XSkat extends Activity {
         setTextSize(R.id.textKontraVon);
         setDeselectedAndSize(R.id.buttonReJa);
         setDeselectedAndSize(R.id.buttonReNein);
-        setText(R.id.textReKontra, getTranslation(Translations.XT_Kontra));
-        setText(R.id.buttonReJa, getTranslation(Translations.XT_Re));
-        setText(R.id.buttonReNein, getTranslation(Translations.XT_Weiter));
+        setText(R.id.textReKontra, getTranslation(R.string.XT_Kontra));
+        setText(R.id.buttonReJa, getTranslation(R.string.XT_Re));
+        setText(R.id.buttonReNein, getTranslation(R.string.XT_Weiter));
         if (phase == ANSAGEN)
             initReKontraStr();
 
@@ -1545,7 +1547,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.textKontraReFuer);
         setTextSize(R.id.textMitKontraRe);
         setDeselectedAndSize(R.id.buttonKontraReOK);
-        setText(R.id.buttonKontraReOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonKontraReOK, getTranslation(R.string.XT_Weiter));
         if (phase == ANSAGEN)
             initKontraReStr();
 
@@ -1562,12 +1564,12 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonResultNochmal);
         setDeselectedAndSize(R.id.buttonResultOK);
         setDeselectedAndSize(R.id.buttonResultProto);
-        setText(R.id.textSpielstandSpieler, getTranslation(Translations.XT_Spieler));
-        setText(R.id.textSpielstandComputerL, getTranslation(Translations.XT_Androido));
-        setText(R.id.textSpielstandComputerR, getTranslation(Translations.XT_Androida));
-        setText(R.id.buttonResultNochmal, getTranslation(Translations.XT_Nochmal));
-        setText(R.id.buttonResultOK, getTranslation(Translations.XT_Weiter));
-        setText(R.id.buttonResultProto, getTranslation(Translations.XT_Protokoll));
+        setText(R.id.textSpielstandSpieler, getTranslation(R.string.XT_Spieler));
+        setText(R.id.textSpielstandComputerL, getTranslation(R.string.XT_Androido));
+        setText(R.id.textSpielstandComputerR, getTranslation(R.string.XT_Androida));
+        setText(R.id.buttonResultNochmal, getTranslation(R.string.XT_Nochmal));
+        setText(R.id.buttonResultOK, getTranslation(R.string.XT_Weiter));
+        setText(R.id.buttonResultProto, getTranslation(R.string.XT_Protokoll));
         if (phase == RESULT)
             initResultStr();
 
@@ -1576,11 +1578,11 @@ public class XSkat extends Activity {
         setTextSize(R.id.textF3);
         setTextSize(R.id.textF4);
         setDeselectedAndSize(R.id.buttonFehlerOK);
-        setText(R.id.textF1, getTranslation(Translations.XT_Nur_bei_Handspielen_kann_Schneider));
-        setText(R.id.textF2, getTranslation(Translations.XT_oder_schwarz_angesagt_werden));
-        setText(R.id.textF3, getTranslation(Translations.XT_Ouvert_schliesst_schwarz_angesagt_ein));
-        setText(R.id.textF4, getTranslation(Translations.XT_ausser_bei_Null_natuerlich));
-        setText(R.id.buttonFehlerOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.textF1, getTranslation(R.string.XT_Nur_bei_Handspielen_kann_Schneider));
+        setText(R.id.textF2, getTranslation(R.string.XT_oder_schwarz_angesagt_werden));
+        setText(R.id.textF3, getTranslation(R.string.XT_Ouvert_schliesst_schwarz_angesagt_ein));
+        setText(R.id.textF4, getTranslation(R.string.XT_ausser_bei_Null_natuerlich));
+        setText(R.id.buttonFehlerOK, getTranslation(R.string.XT_Weiter));
 
         setTextSize(R.id.textU1);
         setTextSize(R.id.textU2);
@@ -1588,12 +1590,12 @@ public class XSkat extends Activity {
         setTextSize(R.id.textU4);
         setTextSize(R.id.textU5);
         setDeselectedAndSize(R.id.buttonUeberreiztOK);
-        setText(R.id.textU1, getTranslation(Translations.XT_Du_hast_hoeher_gereizt_als_der));
-        setText(R.id.textU2, getTranslation(Translations.XT_Wert_des_angesagten_Spiels));
-        setText(R.id.textU3, getTranslation(Translations.XT_Null_23_Hand_35));
-        setText(R.id.textU4, getTranslation(Translations.XT_ouvert_46_ouvert_Hand_59));
-        setText(R.id.textU5, getTranslation(Translations.XT_Revolution_92));
-        setText(R.id.buttonUeberreiztOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.textU1, getTranslation(R.string.XT_Du_hast_hoeher_gereizt_als_der));
+        setText(R.id.textU2, getTranslation(R.string.XT_Wert_des_angesagten_Spiels));
+        setText(R.id.textU3, getTranslation(R.string.XT_Null_23_Hand_35));
+        setText(R.id.textU4, getTranslation(R.string.XT_ouvert_46_ouvert_Hand_59));
+        setText(R.id.textU5, getTranslation(R.string.XT_Revolution_92));
+        setText(R.id.buttonUeberreiztOK, getTranslation(R.string.XT_Weiter));
 
         setTextSize(R.id.sp0head);
         setTextSize(R.id.sp0st0);
@@ -1645,11 +1647,11 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonProtoListe);
         setDeselectedAndSize(R.id.buttonProtoOK);
         setDeselectedAndSize(R.id.buttonProtoPfeil);
-        setText(R.id.sp0head, getTranslation(Translations.XT_Spieler));
-        setText(R.id.sp1head, getTranslation(Translations.XT_Androido));
-        setText(R.id.sp2head, getTranslation(Translations.XT_Androida));
-        setText(R.id.buttonProtoListe, getTranslation(Translations.XT_Liste));
-        setText(R.id.buttonProtoOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.sp0head, getTranslation(R.string.XT_Spieler));
+        setText(R.id.sp1head, getTranslation(R.string.XT_Androido));
+        setText(R.id.sp2head, getTranslation(R.string.XT_Androida));
+        setText(R.id.buttonProtoListe, getTranslation(R.string.XT_Liste));
+        setText(R.id.buttonProtoOK, getTranslation(R.string.XT_Weiter));
 
         setTextSize(R.id.li0head);
         setTextSize(R.id.li0sp0);
@@ -1701,24 +1703,24 @@ public class XSkat extends Activity {
         setTextSize(R.id.li3foot);
         setDeselectedAndSize(R.id.buttonListeOK);
         setDeselectedAndSize(R.id.buttonListeLoeschen);
-        setText(R.id.li0head, getTranslation(Translations.XT_Spieler));
-        setText(R.id.li1head, getTranslation(Translations.XT_Androido));
-        setText(R.id.li2head, getTranslation(Translations.XT_Androida));
-        setText(R.id.li3head, getTranslation(Translations.XT_Spiel));
-        setText(R.id.li3foot, getTranslation(Translations.XT_GV));
-        setText(R.id.buttonListeOK, getTranslation(Translations.XT_Weiter));
-        setText(R.id.buttonListeLoeschen, getTranslation(Translations.XT_Loeschen));
+        setText(R.id.li0head, getTranslation(R.string.XT_Spieler));
+        setText(R.id.li1head, getTranslation(R.string.XT_Androido));
+        setText(R.id.li2head, getTranslation(R.string.XT_Androida));
+        setText(R.id.li3head, getTranslation(R.string.XT_Spiel));
+        setText(R.id.li3foot, getTranslation(R.string.XT_GV));
+        setText(R.id.buttonListeOK, getTranslation(R.string.XT_Weiter));
+        setText(R.id.buttonListeLoeschen, getTranslation(R.string.XT_Loeschen));
 
         setTitleTextSize(R.id.dialogLoeschenL1);
         setTextSize(R.id.dialogLoeschenL2);
         setTextSize(R.id.dialogLoeschenL3);
         setDeselectedAndSize(R.id.buttonLoeschenJa);
         setDeselectedAndSize(R.id.buttonLoeschenNein);
-        setText(R.id.dialogLoeschenL1, getTranslation(Translations.XT_Loesche));
-        setText(R.id.dialogLoeschenL2, getTranslation(Translations.XT_Spielstand));
-        setText(R.id.dialogLoeschenL3, getTranslation(Translations.XT_und_Liste));
-        setText(R.id.buttonLoeschenJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonLoeschenNein, getTranslation(Translations.XT_Nein));
+        setText(R.id.dialogLoeschenL1, getTranslation(R.string.XT_Loesche));
+        setText(R.id.dialogLoeschenL2, getTranslation(R.string.XT_Spielstand));
+        setText(R.id.dialogLoeschenL3, getTranslation(R.string.XT_und_Liste));
+        setText(R.id.buttonLoeschenJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonLoeschenNein, getTranslation(R.string.XT_Nein));
 
         setTitleTextSize(R.id.dialogCP1);
         setTextSize(R.id.dialogCP2);
@@ -1738,10 +1740,10 @@ public class XSkat extends Activity {
                 + (de.xskat.BuildConfig.DEBUG ? " beta" : "")
                 + ((flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 ? " debug"
                         : ""));
-        setText(R.id.dialogCP3, getTranslation(Translations.XT_xskat_de));
-        setText(R.id.dialogCP4, getTranslation(Translations.XT_Dieses_Programm_ist_freie_Software));
-        setText(R.id.dialogCP5, getTranslation(Translations.XT_es_kann_frei_verbreitet_werden));
-        setText(R.id.buttonCopyrightOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.dialogCP3, getTranslation(R.string.XT_xskat_de));
+        setText(R.id.dialogCP4, getTranslation(R.string.XT_Dieses_Programm_ist_freie_Software));
+        setText(R.id.dialogCP5, getTranslation(R.string.XT_es_kann_frei_verbreitet_werden));
+        setText(R.id.buttonCopyrightOK, getTranslation(R.string.XT_Weiter));
 
         setDeselectedAndSize(R.id.buttonNewGame);
         setTextSize(R.id.textSpielstaerke);
@@ -1755,14 +1757,14 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonSpracheEN);
         setDeselectedAndSize(R.id.buttonOptionsOK);
         setDeselectedAndSize(R.id.buttonOptionsListe);
-        setText(R.id.buttonNewGame, getTranslation(Translations.XT_NeuesSpiel));
-        setText(R.id.textSpielstaerke, getTranslation(Translations.XT_Spielstaerke));
-        setText(R.id.textSprache, getTranslation(Translations.XT_Sprache));
-        setText(R.id.buttonOptionsOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonNewGame, getTranslation(R.string.XT_NeuesSpiel));
+        setText(R.id.textSpielstaerke, getTranslation(R.string.XT_Spielstaerke));
+        setText(R.id.textSprache, getTranslation(R.string.XT_Sprache));
+        setText(R.id.buttonOptionsOK, getTranslation(R.string.XT_Weiter));
         if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0)
-            setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
+            setText(R.id.buttonOptionsListe, getTranslation(R.string.XT_Protokoll));
         else
-            setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Liste));
+            setText(R.id.buttonOptionsListe, getTranslation(R.string.XT_Liste));
 
         setTextSize(R.id.textBlatt);
         setDeselectedAndSize(R.id.buttonBlattTU);
@@ -1776,15 +1778,15 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonBlattSortS);
         setDeselectedAndSize(R.id.buttonBlattOK);
         setDeselectedAndSize(R.id.buttonBlattListe);
-        setText(R.id.textBlatt, getTranslation(Translations.XT_Blatt));
-        setText(R.id.buttonBlattTU, getTranslation(Translations.XT_Turnier));
-        setText(R.id.buttonBlattFR, getTranslation(Translations.XT_Franzoesisch));
-        setText(R.id.buttonBlattDE, getTranslation(Translations.XT_Deutsch));
-        setText(R.id.textSortAltSeq, getTranslation(Translations.XT_Sortierung));
-        setText(R.id.buttonBlattSortA, getTranslation(Translations.XT_Alternierend));
-        setText(R.id.buttonBlattSortS, getTranslation(Translations.XT_Sequentiell));
-        setText(R.id.buttonBlattOK, getTranslation(Translations.XT_Weiter));
-        setText(R.id.buttonBlattListe, getTranslation(Translations.XT_Liste));
+        setText(R.id.textBlatt, getTranslation(R.string.XT_Blatt));
+        setText(R.id.buttonBlattTU, getTranslation(R.string.XT_Turnier));
+        setText(R.id.buttonBlattFR, getTranslation(R.string.XT_Franzoesisch));
+        setText(R.id.buttonBlattDE, getTranslation(R.string.XT_Deutsch));
+        setText(R.id.textSortAltSeq, getTranslation(R.string.XT_Sortierung));
+        setText(R.id.buttonBlattSortA, getTranslation(R.string.XT_Alternierend));
+        setText(R.id.buttonBlattSortS, getTranslation(R.string.XT_Sequentiell));
+        setText(R.id.buttonBlattOK, getTranslation(R.string.XT_Weiter));
+        setText(R.id.buttonBlattListe, getTranslation(R.string.XT_Liste));
 
         setTextSize(R.id.textVarianten);
         setTextSize(R.id.textRamsch);
@@ -1805,25 +1807,25 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonSpitzeZaehlt2);
         setDeselectedAndSize(R.id.buttonVariantenOK);
         setDeselectedAndSize(R.id.buttonVariantenFertig);
-        setText(R.id.textVarianten, getTranslation(Translations.XT_Varianten));
-        setText(R.id.textRamsch, getTranslation(Translations.XT_Ramsch));
-        setText(R.id.buttonRamschNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonRamschJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonRamschImmer, getTranslation(Translations.XT_Immer));
-        setText(R.id.textKontra, getTranslation(Translations.XT_Kontra));
-        setText(R.id.buttonVarKontraNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonVarKontraJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonVarKontraAb18, getTranslation(Translations.XT_Ab_18));
-        setText(R.id.textBock, getTranslation(Translations.XT_Bock));
-        setText(R.id.buttonBockNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonBockJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonBockRamsch, getTranslation(Translations.XT_Plus_Ramsch));
-        setText(R.id.textSpitze, getTranslation(Translations.XT_Spitze));
-        setText(R.id.buttonSpitzeNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonSpitzeJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.buttonSpitzeZaehlt2, getTranslation(Translations.XT_Zaehlt_2));
-        setText(R.id.buttonVariantenOK, getTranslation(Translations.XT_Weiter));
-        setText(R.id.buttonVariantenFertig, getTranslation(Translations.XT_Fertig));
+        setText(R.id.textVarianten, getTranslation(R.string.XT_Varianten));
+        setText(R.id.textRamsch, getTranslation(R.string.XT_Ramsch));
+        setText(R.id.buttonRamschNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonRamschJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonRamschImmer, getTranslation(R.string.XT_Immer));
+        setText(R.id.textKontra, getTranslation(R.string.XT_Kontra));
+        setText(R.id.buttonVarKontraNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonVarKontraJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonVarKontraAb18, getTranslation(R.string.XT_Ab_18));
+        setText(R.id.textBock, getTranslation(R.string.XT_Bock));
+        setText(R.id.buttonBockNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonBockJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonBockRamsch, getTranslation(R.string.XT_Plus_Ramsch));
+        setText(R.id.textSpitze, getTranslation(R.string.XT_Spitze));
+        setText(R.id.buttonSpitzeNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonSpitzeJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.buttonSpitzeZaehlt2, getTranslation(R.string.XT_Zaehlt_2));
+        setText(R.id.buttonVariantenOK, getTranslation(R.string.XT_Weiter));
+        setText(R.id.buttonVariantenFertig, getTranslation(R.string.XT_Fertig));
 
         setTextSize(R.id.textSchieberamsch);
         setDeselectedAndSize(R.id.buttonSchieberamschNein);
@@ -1833,14 +1835,14 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonVerlierer);
         setDeselectedAndSize(R.id.buttonRamschVariantenOK);
         setDeselectedAndSize(R.id.buttonRamschVariantenFertig);
-        setText(R.id.textSchieberamsch, getTranslation(Translations.XT_Schieberamsch));
-        setText(R.id.buttonSchieberamschNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonSchieberamschJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.textSkatGehtAn, getTranslation(Translations.XT_Skat_geht_an));
-        setText(R.id.buttonLetztenStich, getTranslation(Translations.XT_letzten_Stich));
-        setText(R.id.buttonVerlierer, getTranslation(Translations.XT_Verlierer));
-        setText(R.id.buttonRamschVariantenOK, getTranslation(Translations.XT_Weiter));
-        setText(R.id.buttonRamschVariantenFertig, getTranslation(Translations.XT_Fertig));
+        setText(R.id.textSchieberamsch, getTranslation(R.string.XT_Schieberamsch));
+        setText(R.id.buttonSchieberamschNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonSchieberamschJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.textSkatGehtAn, getTranslation(R.string.XT_Skat_geht_an));
+        setText(R.id.buttonLetztenStich, getTranslation(R.string.XT_letzten_Stich));
+        setText(R.id.buttonVerlierer, getTranslation(R.string.XT_Verlierer));
+        setText(R.id.buttonRamschVariantenOK, getTranslation(R.string.XT_Weiter));
+        setText(R.id.buttonRamschVariantenFertig, getTranslation(R.string.XT_Fertig));
 
         setTextSize(R.id.textVorschlaege);
         setDeselectedAndSize(R.id.buttonVorschlaegeNein);
@@ -1850,11 +1852,11 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonStichM);
         setDeselectedAndSize(R.id.buttonStichP);
         setDeselectedAndSize(R.id.buttonStichOK);
-        setText(R.id.textVorschlaege, getTranslation(Translations.XT_Vorschlaege));
-        setText(R.id.buttonVorschlaegeNein, getTranslation(Translations.XT_Nein));
-        setText(R.id.buttonVorschlaegeJa, getTranslation(Translations.XT_Ja));
-        setText(R.id.textNimmStich, getTranslation(Translations.XT_Nimm_Stich_nach));
-        setText(R.id.buttonStichOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.textVorschlaege, getTranslation(R.string.XT_Vorschlaege));
+        setText(R.id.buttonVorschlaegeNein, getTranslation(R.string.XT_Nein));
+        setText(R.id.buttonVorschlaegeJa, getTranslation(R.string.XT_Ja));
+        setText(R.id.textNimmStich, getTranslation(R.string.XT_Nimm_Stich_nach));
+        setText(R.id.buttonStichOK, getTranslation(R.string.XT_Weiter));
         initStichStr();
 
         setTitleTextSize(R.id.textWiederholen);
@@ -1864,13 +1866,13 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonVonAndroida);
         setDeselectedAndSize(R.id.buttonWiederholenZurueck);
         setDeselectedAndSize(R.id.buttonWiederholenStart);
-        setText(R.id.textWiederholen, getTranslation(Translations.XT_Spiel_wiederholen));
-        setText(R.id.textMitDenKartenVon, getTranslation(Translations.XT_mit_den_Karten_von));
-        setText(R.id.buttonVonAndroido, getTranslation(Translations.XT_Androido));
-        setText(R.id.buttonVonMir, getTranslation(Translations.XT_mir));
-        setText(R.id.buttonVonAndroida, getTranslation(Translations.XT_Androida));
-        setText(R.id.buttonWiederholenZurueck, getTranslation(Translations.XT_Zurueck));
-        setText(R.id.buttonWiederholenStart, getTranslation(Translations.XT_Start));
+        setText(R.id.textWiederholen, getTranslation(R.string.XT_Spiel_wiederholen));
+        setText(R.id.textMitDenKartenVon, getTranslation(R.string.XT_mit_den_Karten_von));
+        setText(R.id.buttonVonAndroido, getTranslation(R.string.XT_Androido));
+        setText(R.id.buttonVonMir, getTranslation(R.string.XT_mir));
+        setText(R.id.buttonVonAndroida, getTranslation(R.string.XT_Androida));
+        setText(R.id.buttonWiederholenZurueck, getTranslation(R.string.XT_Zurueck));
+        setText(R.id.buttonWiederholenStart, getTranslation(R.string.XT_Start));
 
         setDeselectedAndSize(R.id.buttonComputerLeft);
         setDeselectedAndSize(R.id.buttonComputerRight);
@@ -1881,12 +1883,12 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonWeiter);
         setTextSize(R.id.textHS1);
         setTextSize(R.id.textHS2);
-        setText(R.id.buttonPasse, getTranslation(Translations.XT_Passe));
-        setText(R.id.buttonDruecken, getTranslation(Translations.XT_Druecken));
-        setText(R.id.buttonFertig, getTranslation(Translations.XT_Fertig));
-        setText(R.id.buttonWeiter, getTranslation(Translations.XT_Weiter));
-        setText(R.id.textHS1, getTranslation(Translations.XT_Display_irgendwo_antippen));
-        setText(R.id.textHS2, getTranslation(Translations.XT_um_Stich_zu_entfernen));
+        setText(R.id.buttonPasse, getTranslation(R.string.XT_Passe));
+        setText(R.id.buttonDruecken, getTranslation(R.string.XT_Druecken));
+        setText(R.id.buttonFertig, getTranslation(R.string.XT_Fertig));
+        setText(R.id.buttonWeiter, getTranslation(R.string.XT_Weiter));
+        setText(R.id.textHS1, getTranslation(R.string.XT_Display_irgendwo_antippen));
+        setText(R.id.textHS2, getTranslation(R.string.XT_um_Stich_zu_entfernen));
         if (phase == REIZEN)
             initReizStr();
     }
@@ -1960,27 +1962,27 @@ public class XSkat extends Activity {
     }
 
     void initHandStr() {
-        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereiztHand, getTranslation(R.string.XT_Gereizt_bis) + ": " + reizw[reizp]);
     }
 
     void initVerdoppeltStr() {
-        setText(R.id.textWerSchiebt, spielerm == 1 ? getTranslation(Translations.XT_Androido)
-                : getTranslation(Translations.XT_Androida));
-        setText(R.id.textSchiebt, klopfm ? getTranslation(Translations.XT_klopft)
-                : getTranslation(Translations.XT_nimmt_den_Skat_nicht_auf));
+        setText(R.id.textWerSchiebt, spielerm == 1 ? getTranslation(R.string.XT_Androido)
+                : getTranslation(R.string.XT_Androida));
+        setText(R.id.textSchiebt, klopfm ? getTranslation(R.string.XT_klopft)
+                : getTranslation(R.string.XT_nimmt_den_Skat_nicht_auf));
     }
 
     void initBubenStr() {
         String bb;
         switch (spBDK) {
         default:
-            bb = getTranslation(Translations.XT_Buben);
+            bb = getTranslation(R.string.XT_Buben);
             break;
         case 1:
-            bb = getTranslation(Translations.XT_Jacks);
+            bb = getTranslation(R.string.XT_Jacks);
             break;
         case 2:
-            bb = getTranslation(Translations.XT_Unter);
+            bb = getTranslation(R.string.XT_Unter);
             break;
         }
         setText(R.id.textBuben, bb);
@@ -1988,90 +1990,90 @@ public class XSkat extends Activity {
 
     void initReizStr() {
         if (!saho && hoerer == 0)
-            do_msaho(0, getTranslation(Translations.XT_Ja));
+            do_msaho(0, getTranslation(R.string.XT_Ja));
         if (saho && sager == 0)
             do_msaho(0, "" + reizw[reizp]);
     }
 
     void initAnsageStr() {
-        setText(R.id.textWerSpielt, spieler == 1 ? getTranslation(Translations.XT_Androido)
-                : getTranslation(Translations.XT_Androida));
-        setText(R.id.textSpieltWas, getTranslation(Translations.XT_spielt) + " " + gameName(trumpf)
-                + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textWerSpielt, spieler == 1 ? getTranslation(R.string.XT_Androido)
+                : getTranslation(R.string.XT_Androida));
+        setText(R.id.textSpieltWas, getTranslation(R.string.XT_spielt) + " " + gameName(trumpf)
+                + (handsp ? " " + getTranslation(R.string.XT_Hand) : ""));
+        setText(R.id.textFuer, getTranslation(R.string.XT_fuer) + " " + reizw[reizp]);
     }
 
     void initKontraStr() {
-        setText(R.id.textKontraWerSpielt, spieler == 1 ? getTranslation(Translations.XT_Androido)
-                : getTranslation(Translations.XT_Androida));
-        setText(R.id.textKontraSpieltWas, getTranslation(Translations.XT_spielt) + " "
-                + gameName(trumpf) + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textKontraFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textKontraWerSpielt, spieler == 1 ? getTranslation(R.string.XT_Androido)
+                : getTranslation(R.string.XT_Androida));
+        setText(R.id.textKontraSpieltWas, getTranslation(R.string.XT_spielt) + " "
+                + gameName(trumpf) + (handsp ? " " + getTranslation(R.string.XT_Hand) : ""));
+        setText(R.id.textKontraFuer, getTranslation(R.string.XT_fuer) + " " + reizw[reizp]);
     }
 
     void initReKontraStr() {
-        setText(R.id.textKontraVon, getTranslation(Translations.XT_von)
-                + (kontram == 1 ? getTranslation(Translations.XT_Androido) : getTranslation(Translations.XT_Androida)));
+        setText(R.id.textKontraVon, getTranslation(R.string.XT_von)
+                + (kontram == 1 ? getTranslation(R.string.XT_Androido) : getTranslation(R.string.XT_Androida)));
     }
 
     void initKontraReStr() {
-        setText(R.id.textKontraReWerSpielt, spieler == 1 ? getTranslation(Translations.XT_Androido)
-                : getTranslation(Translations.XT_Androida));
-        setText(R.id.textKontraReSpieltWas, getTranslation(Translations.XT_spielt) + " "
-                + gameName(trumpf) + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textKontraReFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
-        setText(R.id.textMitKontraRe, getTranslation(Translations.XT_mit_Kontra)
-                + (kontrastufe == 2 ? getTranslation(Translations.XT_und) + getTranslation(Translations.XT_Re) : ""));
+        setText(R.id.textKontraReWerSpielt, spieler == 1 ? getTranslation(R.string.XT_Androido)
+                : getTranslation(R.string.XT_Androida));
+        setText(R.id.textKontraReSpieltWas, getTranslation(R.string.XT_spielt) + " "
+                + gameName(trumpf) + (handsp ? " " + getTranslation(R.string.XT_Hand) : ""));
+        setText(R.id.textKontraReFuer, getTranslation(R.string.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textMitKontraRe, getTranslation(R.string.XT_mit_Kontra)
+                + (kontrastufe == 2 ? getTranslation(R.string.XT_und) + getTranslation(R.string.XT_Re) : ""));
     }
 
     void initSpielStr() {
-        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereizt, getTranslation(R.string.XT_Gereizt_bis) + ": " + reizw[reizp]);
     }
 
     void initStichStr() {
-        String t = getTranslation(Translations.XT_Antippen);
+        String t = getTranslation(R.string.XT_Antippen);
         if (nimmstich[0][0] < 101) {
-            t = nimmstich[0][0] / 100.0 + getTranslation(Translations.XT_Sekunden);
+            t = nimmstich[0][0] / 100.0 + getTranslation(R.string.XT_Sekunden);
         }
         setText(R.id.textSec, t);
     }
 
     void initResultStr() {
         TextView v = (TextView) findViewById(R.id.textResultMsg);
-        String s = (trumpf == 5 ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
-                : mes2 ? getTranslation(Translations.XT_Durchmarsch) : "") : (mes1 ? getTranslation(Translations.XT_Ueberreizt)
-                : mes2 ? getTranslation(Translations.XT_Gegner_nicht_Schneider)
-                        : mes3 ? getTranslation(Translations.XT_Gegner_nicht_schwarz)
-                                : mes4 ? getTranslation(Translations.XT_Spitze_verloren) : ""));
+        String s = (trumpf == 5 ? (mes1 ? getTranslation(R.string.XT_Eine_Jungfrau)
+                : mes2 ? getTranslation(R.string.XT_Durchmarsch) : "") : (mes1 ? getTranslation(R.string.XT_Ueberreizt)
+                : mes2 ? getTranslation(R.string.XT_Gegner_nicht_Schneider)
+                        : mes3 ? getTranslation(R.string.XT_Gegner_nicht_schwarz)
+                                : mes4 ? getTranslation(R.string.XT_Spitze_verloren) : ""));
         v.setText(s);
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textResult);
-        s = getTranslation(Translations.XT_Spieler);
+        s = getTranslation(R.string.XT_Spieler);
         if (trumpf == 5 && spwert == 0) {
-            s = getTranslation(Translations.XT_Niemand);
+            s = getTranslation(R.string.XT_Niemand);
         } else if (spieler > 0) {
-            s = spieler == 1 ? getTranslation(Translations.XT_Androido) : getTranslation(Translations.XT_Androida);
+            s = spieler == 1 ? getTranslation(R.string.XT_Androido) : getTranslation(R.string.XT_Androida);
         }
         v.setText(s);
         v = (TextView) findViewById(R.id.textGewVerl);
-        s = spgew ? getTranslation(Translations.XT_gewinnt) : getTranslation(Translations.XT_verliert);
+        s = spgew ? getTranslation(R.string.XT_gewinnt) : getTranslation(R.string.XT_verliert);
         v.setText(s);
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textMitAugen);
         if (trumpf == -1) {
-            s = getTranslation(Translations.XT_das_Nullspiel);
+            s = getTranslation(R.string.XT_das_Nullspiel);
         } else if (trumpf == 5) {
-            s = getTranslation(Translations.XT_den_Ramsch);
+            s = getTranslation(R.string.XT_den_Ramsch);
         } else {
             if (stich == 1) {
                 s = "";
             } else if ((spgew && schwz) || !nullv) {
-                s = getTranslation(Translations.XT_schwarz);
+                s = getTranslation(R.string.XT_schwarz);
             } else {
-                s = getTranslation(Translations.XT_mit) + " " + stsum + " " + getTranslation(Translations.XT_Augen);
+                s = getTranslation(R.string.XT_mit) + " " + stsum + " " + getTranslation(R.string.XT_Augen);
             }
         }
-        s += " " + getTranslation(Translations.XT_Spielwert) + ": "
+        s += " " + getTranslation(R.string.XT_Spielwert) + ": "
                 + (spgew && (trumpf != 5 || stsum == 120) ? spwert : -spwert);
         v.setText(s);
     }
@@ -3432,7 +3434,7 @@ public class XSkat extends Activity {
     }
 
     void do_passen(int s) {
-        b_text(s, getTranslation(Translations.XT_Passe));
+        b_text(s, getTranslation(R.string.XT_Passe));
         inv_box(s, true, true);
         stdwait();
         inv_box(s, true, false);
@@ -3440,7 +3442,7 @@ public class XSkat extends Activity {
     }
 
     void do_akzept(final int s) {
-        b_text(s, getTranslation(Translations.XT_Ja));
+        b_text(s, getTranslation(R.string.XT_Ja));
         inv_box(s, false, true);
         stdwait();
         inv_box(s, false, false);
@@ -3470,7 +3472,7 @@ public class XSkat extends Activity {
         if (lastmsaho[sn] == 1)
             return;
         lastmsaho[sn] = 1;
-        do_msaho(sn, getTranslation(Translations.XT_Ja));
+        do_msaho(sn, getTranslation(R.string.XT_Ja));
     }
 
     void do_entsch() {
@@ -7422,7 +7424,7 @@ public class XSkat extends Activity {
                     if (prot1.spitze
                             && stiche[i][s] == (prot1.trumpf == 4 ? BUBE
                                     : SIEBEN | prot1.trumpf << 3)) {
-                        txt = getTranslation(Translations.XT_Spitze);
+                        txt = getTranslation(R.string.XT_Spitze);
                     } else {
                         txt = gameName(stiche[i][s] >> 3);
                         txt += (e & 2) != 0 ? "_" : " ";
@@ -7432,9 +7434,9 @@ public class XSkat extends Activity {
                     }
                 } else {
                     txt = e == 2 ? "_" : "";
-                    txt += prot1.schenken != 0 ? prot1.spieler == s ? getTranslation(Translations.XT_Annehmen)
-                            : getTranslation(Translations.XT_Schenken)
-                            : getTranslation(Translations.XT_Passe);
+                    txt += prot1.schenken != 0 ? prot1.spieler == s ? getTranslation(R.string.XT_Annehmen)
+                            : getTranslation(R.string.XT_Schenken)
+                            : getTranslation(R.string.XT_Passe);
                     txt += e == 2 ? "_" : "";
                 }
                 tv.setText(txt);
@@ -7478,7 +7480,7 @@ public class XSkat extends Activity {
     }
 
     void im_skat(int i) {
-        String s = getTranslation(Translations.XT_Im_Skat) + " " + (i == 0 ? getTranslation(Translations.XT_war) : getTranslation(Translations.XT_ist))
+        String s = getTranslation(R.string.XT_Im_Skat) + " " + (i == 0 ? getTranslation(R.string.XT_war) : getTranslation(R.string.XT_ist))
                 + ": ";
         TextView tv = (TextView) findViewById(R.id.textImSkatIst1);
         tv.setText(s);
@@ -7575,7 +7577,7 @@ public class XSkat extends Activity {
         Button v = (Button) findViewById(R.id.button18);
         v.setText(str);
         v = (Button) findViewById(R.id.buttonPasse);
-        v.setText(getTranslation(Translations.XT_Passe));
+        v.setText(getTranslation(R.string.XT_Passe));
     }
 
     void draw_skat(int sn) {
@@ -8092,6 +8094,9 @@ public class XSkat extends Activity {
     }
 
     private String getTranslation(int key) {
+        if (key > 122) {
+            return getResources().getString(key);
+        }
         return Translations.getTranslation(key, currLang);
     }
 }
