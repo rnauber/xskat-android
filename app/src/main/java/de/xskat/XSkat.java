@@ -49,6 +49,8 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.Locale;
 
+import de.xskat.data.Trump;
+
 public class XSkat extends Activity {
 
     // Don't try this at home, kids!
@@ -2070,7 +2072,7 @@ public class XSkat extends Activity {
 
     void initResultStr() {
         TextView v = (TextView) findViewById(R.id.textResultMsg);
-        String s = (trumpf == 5 ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
+        String s = (Trump.isRamsch(trumpf) ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
                 : mes2 ? getTranslation(Translations.XT_Durchmarsch) : "") : (mes1 ? getTranslation(Translations.XT_Ueberreizt)
                 : mes2 ? getTranslation(Translations.XT_Gegner_nicht_Schneider)
                         : mes3 ? getTranslation(Translations.XT_Gegner_nicht_schwarz)
@@ -2079,7 +2081,7 @@ public class XSkat extends Activity {
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textResult);
         s = getTranslation(Translations.XT_Spieler);
-        if (trumpf == 5 && spwert == 0) {
+        if (Trump.isRamsch(trumpf) && spwert == 0) {
             s = getTranslation(Translations.XT_Niemand);
         } else if (spieler > 0) {
             s = spieler == 1 ? getTranslation(Translations.XT_Androido) : getTranslation(Translations.XT_Androida);
@@ -2090,9 +2092,9 @@ public class XSkat extends Activity {
         v.setText(s);
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textMitAugen);
-        if (trumpf == -1) {
+        if (Trump.isNullGame(trumpf)) {
             s = getTranslation(Translations.XT_das_Nullspiel);
-        } else if (trumpf == 5) {
+        } else if (Trump.isRamsch(trumpf)) {
             s = getTranslation(Translations.XT_den_Ramsch);
         } else {
             if (stich == 1) {
@@ -2104,7 +2106,7 @@ public class XSkat extends Activity {
             }
         }
         s += " " + getTranslation(Translations.XT_Spielwert) + ": "
-                + (spgew && (trumpf != 5 || stsum == 120) ? spwert : -spwert);
+                + (spgew && (!Trump.isRamsch(trumpf) || stsum == 120) ? spwert : -spwert);
         v.setText(s);
     }
 
