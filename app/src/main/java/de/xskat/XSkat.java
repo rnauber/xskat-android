@@ -109,6 +109,13 @@ public class XSkat extends Activity {
         editor.commit();
     }
 
+    private int getButtonSpeedId(int animSpeed) {
+        if (animSpeed == 0) {
+            return R.id.buttonAnimS;
+        }
+        return animSpeed == 1 ? R.id.buttonAnim0 : R.id.buttonAnimL;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -117,6 +124,7 @@ public class XSkat extends Activity {
                 return true;
             case R.id.menuOptions:
                 setSelected(R.id.buttonStaerkePP + strateg[0]);
+                setSelected(getButtonSpeedId(animSpeed));
                 setSelected(R.id.buttonSpracheDE + currLang);
                 if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0) {
                     setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
@@ -276,6 +284,25 @@ public class XSkat extends Activity {
             for (int i = 0; i < 3; i++) {
                 strateg[i] = st;
                 editor.putInt("strateg" + i, strateg[i]);
+            }
+        } else if (view == findViewById(R.id.buttonAnimL) ||
+                view == findViewById(R.id.buttonAnim0) ||
+                view == findViewById(R.id.buttonAnimS)) {
+            setDeselected(R.id.buttonAnimL);
+            setDeselected(R.id.buttonAnim0);
+            setDeselected(R.id.buttonAnimS);
+            setSelected(view);
+            int v;
+            if (isSelected(R.id.buttonAnimL)) {
+                v = 2;
+            } else if (isSelected(R.id.buttonAnimS)) {
+                v = 0;
+            } else {
+                v = 1;
+            }
+            if (v != animSpeed) {
+                editor.putInt("animSpeed", v);
+                animSpeed = v;
             }
         } else if (view == findViewById(R.id.buttonSpracheDE)
                 || view == findViewById(R.id.buttonSpracheEN)) {
@@ -1338,7 +1365,7 @@ public class XSkat extends Activity {
 
     void moveCardOverlay(final int card, final int fromId, final int toId,
             final int toX, final int toY, final int tail, final int p) {
-        final int steps = 6;
+        final int steps = 3 + animSpeed;
 
         discardInput = true;
         if (p <= steps) {
@@ -1748,6 +1775,10 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonStaerke0);
         setDeselectedAndSize(R.id.buttonStaerkeP);
         setDeselectedAndSize(R.id.buttonStaerkePP);
+        setTextSize(R.id.textAnimationSpeed);
+        setDeselectedAndSize(R.id.buttonAnimL);
+        setDeselectedAndSize(R.id.buttonAnim0);
+        setDeselectedAndSize(R.id.buttonAnimS);
         setTextSize(R.id.textSprache);
         setDeselectedAndSize(R.id.buttonSpracheDE);
         setDeselectedAndSize(R.id.buttonSpracheEN);
@@ -1755,12 +1786,14 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonOptionsListe);
         setText(R.id.buttonNewGame, getTranslation(Translations.XT_NeuesSpiel));
         setText(R.id.textSpielstaerke, getTranslation(Translations.XT_Spielstaerke));
+        setText(R.id.textAnimationSpeed, getTranslation(Translations.XT_AnimationSpeed));
         setText(R.id.textSprache, getTranslation(Translations.XT_Sprache));
         setText(R.id.buttonOptionsOK, getTranslation(Translations.XT_Weiter));
-        if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0)
+        if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0) {
             setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Protokoll));
-        else
+        } else {
             setText(R.id.buttonOptionsListe, getTranslation(Translations.XT_Liste));
+        }
 
         setTextSize(R.id.textBlatt);
         setDeselectedAndSize(R.id.buttonBlattTU);
@@ -2892,6 +2925,7 @@ public class XSkat extends Activity {
     int splstp;
     int currLang;
     int[] strateg = new int[3];
+    int animSpeed = 0;
     int[][] sgewoverl = new int[3][2];
     int[][] splsum = new int[3][3];
 

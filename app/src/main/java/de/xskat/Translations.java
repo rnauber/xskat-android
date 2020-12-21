@@ -131,7 +131,8 @@ public class Translations {
             {"mit den Karten von", "with the cards from"}, // XT_mit_den_Karten_von
             {"mir", "me"}, // XT_mir
             {"Zurück", "Back"}, // XT_Zurueck
-            {"Start", "Start"} // XT_Start
+            {"Start", "Start"}, // XT_Start
+            {"Animationsgeschwindigkeit", "Animation speed"} // XT_AnimationSpeed
     };
 
     static final int XT_Null = 0;
@@ -257,6 +258,7 @@ public class Translations {
     static final int XT_mir = 120;
     static final int XT_Zurueck = 121;
     static final int XT_Start = 122;
+    static final int XT_AnimationSpeed = 123;
 
     static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];
