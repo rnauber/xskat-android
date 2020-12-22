@@ -1763,7 +1763,8 @@ public class XSkat extends Activity {
                 + (de.xskat.BuildConfig.DEBUG ? " beta" : "")
                 + ((flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0 ? " debug"
                         : ""));
-        setText(R.id.dialogCP3, getTranslation(Translations.XT_xskat_de));
+        String http = getTranslation(Translations.XT_xskat_de) + "\n" + getTranslation(Translations.XT_github_xskat);
+        setText(R.id.dialogCP3, http);
         setText(R.id.dialogCP4, getTranslation(Translations.XT_Dieses_Programm_ist_freie_Software));
         setText(R.id.dialogCP5, getTranslation(Translations.XT_es_kann_frei_verbreitet_werden));
         setText(R.id.buttonCopyrightOK, getTranslation(Translations.XT_Weiter));

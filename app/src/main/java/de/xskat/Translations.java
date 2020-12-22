@@ -132,7 +132,8 @@ public class Translations {
             {"mir", "me"}, // XT_mir
             {"Zurück", "Back"}, // XT_Zurueck
             {"Start", "Start"}, // XT_Start
-            {"Animationsgeschwindigkeit", "Animation speed"} // XT_AnimationSpeed
+            {"Animationsgeschwindigkeit", "Animation speed"}, // XT_AnimationSpeed
+            {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"} // XT_github_xskat / 124
     };
 
     static final int XT_Null = 0;
@@ -259,6 +260,7 @@ public class Translations {
     static final int XT_Zurueck = 121;
     static final int XT_Start = 122;
     static final int XT_AnimationSpeed = 123;
+    static final int XT_github_xskat = 124;
 
     static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];
