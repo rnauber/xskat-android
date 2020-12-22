@@ -132,9 +132,8 @@ public class Translations {
             {"mir", "me"}, // XT_mir
             {"Zurück", "Back"}, // XT_Zurueck
             {"Start", "Start"}, // XT_Start
-            {"Animationsgeschwindigkeit", "Animation speed"} // XT_AnimationSpeed
-            {"Start", "Start"}, // XT_Start
-            {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"}
+            {"Animationsgeschwindigkeit", "Animation speed"}, // XT_AnimationSpeed
+            {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"} // XT_github_xskat / 124
     };
 
     static final int XT_Null = 0;
