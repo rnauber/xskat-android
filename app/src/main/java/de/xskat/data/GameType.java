@@ -1,10 +1,10 @@
 package de.xskat.data;
 
-public enum Trump {
+public enum GameType {
     NULL(-1), DIAMONDS(0), HEARTS(1), SPADES(2), CLUBS(3), GRAND(4), RAMSCH(5);
     private final int _value;
 
-    Trump(int value) {
+    GameType(int value) {
         _value = value;
     }
 

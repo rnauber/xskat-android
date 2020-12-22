@@ -49,7 +49,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.Locale;
 
-import de.xskat.data.Trump;
+import de.xskat.data.GameType;
 
 public class XSkat extends Activity {
 
@@ -1582,6 +1582,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.textResult);
         setTextSize(R.id.textGewVerl);
         setTextSize(R.id.textMitAugen);
+        setTextSize(R.id.textGereiztBis);
         setTextSize(R.id.textSpielstandSpieler);
         setTextSize(R.id.textSpielstandComputerL);
         setTextSize(R.id.textSpielstandComputerR);
@@ -1994,7 +1995,7 @@ public class XSkat extends Activity {
     }
 
     void initHandStr() {
-        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + reizw[reizp]);
     }
 
     void initVerdoppeltStr() {
@@ -2059,7 +2060,7 @@ public class XSkat extends Activity {
     }
 
     void initSpielStr() {
-        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + reizw[reizp]);
     }
 
     void initStichStr() {
@@ -2072,7 +2073,7 @@ public class XSkat extends Activity {
 
     void initResultStr() {
         TextView v = (TextView) findViewById(R.id.textResultMsg);
-        String s = (Trump.isRamsch(trumpf) ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
+        String s = (GameType.isRamsch(trumpf) ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
                 : mes2 ? getTranslation(Translations.XT_Durchmarsch) : "") : (mes1 ? getTranslation(Translations.XT_Ueberreizt)
                 : mes2 ? getTranslation(Translations.XT_Gegner_nicht_Schneider)
                         : mes3 ? getTranslation(Translations.XT_Gegner_nicht_schwarz)
@@ -2081,7 +2082,7 @@ public class XSkat extends Activity {
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textResult);
         s = getTranslation(Translations.XT_Spieler);
-        if (Trump.isRamsch(trumpf) && spwert == 0) {
+        if (GameType.isRamsch(trumpf) && spwert == 0) {
             s = getTranslation(Translations.XT_Niemand);
         } else if (spieler > 0) {
             s = spieler == 1 ? getTranslation(Translations.XT_Androido) : getTranslation(Translations.XT_Androida);
@@ -2092,9 +2093,9 @@ public class XSkat extends Activity {
         v.setText(s);
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textMitAugen);
-        if (Trump.isNullGame(trumpf)) {
+        if (GameType.isNullGame(trumpf)) {
             s = getTranslation(Translations.XT_das_Nullspiel);
-        } else if (Trump.isRamsch(trumpf)) {
+        } else if (GameType.isRamsch(trumpf)) {
             s = getTranslation(Translations.XT_den_Ramsch);
         } else {
             if (stich == 1) {
@@ -2106,8 +2107,15 @@ public class XSkat extends Activity {
             }
         }
         s += " " + getTranslation(Translations.XT_Spielwert) + ": "
-                + (spgew && (!Trump.isRamsch(trumpf) || stsum == 120) ? spwert : -spwert);
+                + (spgew && (!GameType.isRamsch(trumpf) || stsum == 120) ? spwert : -spwert);
         v.setText(s);
+        v = (TextView) findViewById(R.id.textGereiztBis);
+        if (GameType.isRamsch(trumpf)) {
+            v.setText("");
+        } else {
+            s = getTranslation(Translations.XT_Gereizt_bis) + reizw[reizp];
+            v.setText(s);
+        }
     }
 
     void saveState() {
@@ -7539,6 +7547,10 @@ public class XSkat extends Activity {
         prot_fun(sn);
     }
 
+    /**
+     * Shows the result of the recently finished game.
+     * @param be
+     */
     void di_result(int be) {
         initResultStr();
         View vp = findViewById(R.id.playVMHLeft);
@@ -7550,12 +7562,12 @@ public class XSkat extends Activity {
         boolean b0 = spieler == 0;
         boolean b1 = spieler == 1;
         boolean b2 = spieler == 2;
-        if (spgew && (alist[0] == 1 || (trumpf == 5 && stsum != 120))) {
+        if (spgew && (alist[0] == 1 || (GameType.isRamsch(trumpf) && stsum != 120))) {
             b0 = !b0;
             b1 = !b1;
             b2 = !b2;
         }
-        if (trumpf == 5 && spwert == 0) {
+        if (GameType.isRamsch(trumpf) && spwert == 0) {
             b0 = b1 = b2 = false;
         }
         TextView v = (TextView) findViewById(R.id.textSpielstandPlayer);
