@@ -15,7 +15,7 @@ public class Translations {
             {"Ramsch", "Ramsch"}, // XT_Ramsch
             {"Sortiere für Null", "Sort for Null"}, // XT_Sortiere_fuer_Null
             {"Sortiere normal", "Sort normally"}, // XT_Sortiere_normal
-            {"Gereizt bis", "You have bid"}, // XT_Gereizt_bis
+            {"Gereizt bis: ", "You have bid: "}, // XT_Gereizt_bis
             {"Androido", "Androido"}, // XT_Androido
             {"Androida", "Androida"}, // XT_Androida
             {"spielt", "plays"}, // XT_spielt

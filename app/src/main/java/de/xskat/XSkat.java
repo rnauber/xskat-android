@@ -49,6 +49,8 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.Locale;
 
+import de.xskat.data.GameType;
+
 public class XSkat extends Activity {
 
     // Don't try this at home, kids!
@@ -480,7 +482,7 @@ public class XSkat extends Activity {
         }
         if (!ag
                 && trumpf == -1
-                && reizw[reizp] > nullw[isSelected(R.id.buttonRevolution) ? 4
+                && reizValues[reizp] > nullw[isSelected(R.id.buttonRevolution) ? 4
                         : (isSelected(R.id.buttonOuvert) ? 2 : 0)
                                 + (handsp ? 1 : 0)]) {
             setGone(R.id.dialogSpielen);
@@ -1580,6 +1582,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.textResult);
         setTextSize(R.id.textGewVerl);
         setTextSize(R.id.textMitAugen);
+        setTextSize(R.id.textGereiztBis);
         setTextSize(R.id.textSpielstandSpieler);
         setTextSize(R.id.textSpielstandComputerL);
         setTextSize(R.id.textSpielstandComputerR);
@@ -1992,7 +1995,7 @@ public class XSkat extends Activity {
     }
 
     void initHandStr() {
-        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp]);
     }
 
     void initVerdoppeltStr() {
@@ -2022,7 +2025,7 @@ public class XSkat extends Activity {
         if (!saho && hoerer == 0)
             do_msaho(0, getTranslation(Translations.XT_Ja));
         if (saho && sager == 0)
-            do_msaho(0, "" + reizw[reizp]);
+            do_msaho(0, "" + reizValues[reizp]);
     }
 
     void initAnsageStr() {
@@ -2030,7 +2033,7 @@ public class XSkat extends Activity {
                 : getTranslation(Translations.XT_Androida));
         setText(R.id.textSpieltWas, getTranslation(Translations.XT_spielt) + " " + gameName(trumpf)
                 + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textFuer, getTranslation(Translations.XT_fuer) + " " + reizValues[reizp]);
     }
 
     void initKontraStr() {
@@ -2038,7 +2041,7 @@ public class XSkat extends Activity {
                 : getTranslation(Translations.XT_Androida));
         setText(R.id.textKontraSpieltWas, getTranslation(Translations.XT_spielt) + " "
                 + gameName(trumpf) + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textKontraFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textKontraFuer, getTranslation(Translations.XT_fuer) + " " + reizValues[reizp]);
     }
 
     void initReKontraStr() {
@@ -2051,13 +2054,13 @@ public class XSkat extends Activity {
                 : getTranslation(Translations.XT_Androida));
         setText(R.id.textKontraReSpieltWas, getTranslation(Translations.XT_spielt) + " "
                 + gameName(trumpf) + (handsp ? " " + getTranslation(Translations.XT_Hand) : ""));
-        setText(R.id.textKontraReFuer, getTranslation(Translations.XT_fuer) + " " + reizw[reizp]);
+        setText(R.id.textKontraReFuer, getTranslation(Translations.XT_fuer) + " " + reizValues[reizp]);
         setText(R.id.textMitKontraRe, getTranslation(Translations.XT_mit_Kontra)
                 + (kontrastufe == 2 ? getTranslation(Translations.XT_und) + getTranslation(Translations.XT_Re) : ""));
     }
 
     void initSpielStr() {
-        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizw[reizp]);
+        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp]);
     }
 
     void initStichStr() {
@@ -2070,7 +2073,7 @@ public class XSkat extends Activity {
 
     void initResultStr() {
         TextView v = (TextView) findViewById(R.id.textResultMsg);
-        String s = (trumpf == 5 ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
+        String s = (GameType.isRamsch(trumpf) ? (mes1 ? getTranslation(Translations.XT_Eine_Jungfrau)
                 : mes2 ? getTranslation(Translations.XT_Durchmarsch) : "") : (mes1 ? getTranslation(Translations.XT_Ueberreizt)
                 : mes2 ? getTranslation(Translations.XT_Gegner_nicht_Schneider)
                         : mes3 ? getTranslation(Translations.XT_Gegner_nicht_schwarz)
@@ -2079,7 +2082,7 @@ public class XSkat extends Activity {
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textResult);
         s = getTranslation(Translations.XT_Spieler);
-        if (trumpf == 5 && spwert == 0) {
+        if (GameType.isRamsch(trumpf) && spwert == 0) {
             s = getTranslation(Translations.XT_Niemand);
         } else if (spieler > 0) {
             s = spieler == 1 ? getTranslation(Translations.XT_Androido) : getTranslation(Translations.XT_Androida);
@@ -2090,9 +2093,9 @@ public class XSkat extends Activity {
         v.setText(s);
         v.setTypeface(null, Typeface.BOLD);
         v = (TextView) findViewById(R.id.textMitAugen);
-        if (trumpf == -1) {
+        if (GameType.isNullGame(trumpf)) {
             s = getTranslation(Translations.XT_das_Nullspiel);
-        } else if (trumpf == 5) {
+        } else if (GameType.isRamsch(trumpf)) {
             s = getTranslation(Translations.XT_den_Ramsch);
         } else {
             if (stich == 1) {
@@ -2104,8 +2107,15 @@ public class XSkat extends Activity {
             }
         }
         s += " " + getTranslation(Translations.XT_Spielwert) + ": "
-                + (spgew && (trumpf != 5 || stsum == 120) ? spwert : -spwert);
+                + (spgew && (!GameType.isRamsch(trumpf) || stsum == 120) ? spwert : -spwert);
         v.setText(s);
+        v = (TextView) findViewById(R.id.textGereiztBis);
+        if (GameType.isRamsch(trumpf)) {
+            v.setText("");
+        } else {
+            s = getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp];
+            v.setText(s);
+        }
     }
 
     void saveState() {
@@ -2822,6 +2832,7 @@ public class XSkat extends Activity {
     class structprot {
         boolean gewonn, handsp, spitze, revolution;
         int stichgem, spieler;
+        // TODO substitute with de.xskat.data.GameType
         int trumpf; // -1=Null, 0=Diamonds, 1=Hearts, 4=Grand, 5=Ramsch
         int gereizt, augen, spwert, ehsso, sramsch,
                 rotateby, schenken, savseed;
@@ -2988,15 +2999,20 @@ public class XSkat extends Activity {
     final int D_com2x = 1;
     final int D_com2y = 0;
 
+    // Array containing the possible bid values for Null games: standard=23, hand=35, ouvert=46,
+    // hand&ouvert=59, Revolution=92
     final int[] nullw = { 23, 35, 46, 59, 92 };
-    final int[] rwert = { 9, 10, 11, 12, 24 };
-    final int[] reizw = { 18, 20, 22, 23, 24, 27, 30, 33, 35, 36, 40, 44, 45,
+    // Array containg the base values for the five default games: Diamonds, Hearts, Spades, Clubs, Grand
+    final int[] reizBaseValues = { 9, 10, 11, 12, 24 };
+    // Array containing all possible bid values in ascending order
+    final int[] reizValues = { 18, 20, 22, 23, 24, 27, 30, 33, 35, 36, 40, 44, 45,
             46, 48, 50, 54, 55, 59, 60, 63, 66, 70, 72, 77, 80, 81, 84, 88, 90,
             96, 99, 100, 108, 110, 117, 120, 121, 126, 130, 132, 135, 140, 143,
             144, 150, 153, 154, 156, 160, 162, 165, 168, 170, 171, 176, 180,
             187, 189, 190, 192, 198, 200, 204, 207, 209, 210, 216, 220, 228,
             240, 264, 999 };
-    final int[] cardw = { 11, 10, 4, 3, 2, 0, 0, 0 };
+    // Array containing the values of the eight cards: Ace, Ten, King, Queen, Jack, Nine, Eight, Seven.
+    final int[] cardValues = { 11, 10, 4, 3, 2, 0, 0, 0 };
     final int[] sortw = { 0, 1, 2, 3 };
     final int[] rswert = { 0, 0, 4, 5, 0, 3, 2, 1 };
     final int[] ggdmw = { 7, 6, 5, 0, 4, 1, 2, 3 };
@@ -3312,7 +3328,7 @@ public class XSkat extends Activity {
                     ze++;
                     break;
                 default:
-                    dk += cardw[c & 7];
+                    dk += cardValues[c & 7];
                 }
             }
         }
@@ -3327,7 +3343,7 @@ public class XSkat extends Activity {
                 while (f < 5 && b[4 - f])
                     f++;
             }
-            maxrw[s] = f * rwert[tr];
+            maxrw[s] = f * reizBaseValues[tr];
         }
         if (maxrw[s] == 0)
             testnull(s);
@@ -3358,7 +3374,7 @@ public class XSkat extends Activity {
             if (maxrw[s] > 17)
                 maxrw[s] = 17;
             else if (maxrw[s] == 17 || rnd(7) < -stg)
-                maxrw[s] = 2 * rwert[tr];
+                maxrw[s] = 2 * reizBaseValues[tr];
             else
                 maxrw[s] = 17;
         }
@@ -3509,7 +3525,7 @@ public class XSkat extends Activity {
     void do_entsch() {
         int rw;
 
-        rw = reizw[reizp];
+        rw = reizValues[reizp];
         if (saho) {
             if (maxrw[sager] >= rw || (maxrw[sager] == 17 && rw == 18)) {
                 do_sagen(sager, rw);
@@ -3571,7 +3587,7 @@ public class XSkat extends Activity {
         }
         if (phase == REIZEN) {
             if (saho)
-                do_msagen(sager, reizw[reizp]);
+                do_msagen(sager, reizValues[reizp]);
             else
                 do_mhoeren(hoerer);
         }
@@ -3583,7 +3599,7 @@ public class XSkat extends Activity {
         for (i = (trumpf != 5 ? 1 : 0); i < 8 && n != 0 && gedr < 2; i++) {
             if (inhand[f][i]) {
                 inhand[f][i] = false;
-                p[f] -= cardw[i];
+                p[f] -= cardValues[i];
                 if (gedr == 0 && cards[31] == (f << 3) + i) {
                     swap(cards, 30, 31);
                 } else {
@@ -3755,7 +3771,7 @@ public class XSkat extends Activity {
                 b[c >> 3] = true;
                 bb++;
             } else {
-                p[c >> 3] += cardw[c & 7];
+                p[c >> 3] += cardValues[c & 7];
                 t[c >> 3]++;
                 inhand[c >> 3][c & 7] = true;
             }
@@ -3771,7 +3787,7 @@ public class XSkat extends Activity {
         while (f < 5 && b[4 - f] == b[3])
             f++;
         trumpf = 0;
-        while (f * rwert[trumpf] < reizw[reizp])
+        while (f * reizBaseValues[trumpf] < reizValues[reizp])
             trumpf++;
         for (i = trumpf + 1; i < 4; i++) {
             if (t[i] > t[trumpf] || (t[i] == t[trumpf] && p[i] <= p[trumpf]))
@@ -3850,7 +3866,7 @@ public class XSkat extends Activity {
                 b[c >> 3] = true;
                 bb++;
             } else {
-                p[c >> 3] += cardw[c & 7];
+                p[c >> 3] += cardValues[c & 7];
                 t[c >> 3]++;
                 inhand[c >> 3][c & 7] = true;
             }
@@ -3860,7 +3876,7 @@ public class XSkat extends Activity {
             f++;
         trumpf = 0;
         if (iscomp(spieler)) {
-            while (f * rwert[trumpf] < reizw[reizp])
+            while (f * reizBaseValues[trumpf] < reizValues[reizp])
                 trumpf++;
         }
         for (i = trumpf + 1; i < 4; i++) {
@@ -4000,7 +4016,7 @@ public class XSkat extends Activity {
         prot2.stichgem = stich - 1;
         prot2.spieler = spieler;
         prot2.trumpf = trumpf;
-        prot2.gereizt = reizp < 0 || (ramschspiele != 0) ? 0 : reizw[reizp];
+        prot2.gereizt = reizp < 0 || (ramschspiele != 0) ? 0 : reizValues[reizp];
         prot2.gewonn = spgew;
         prot2.augen = stsum;
         prot2.spwert = spwert;
@@ -4094,7 +4110,7 @@ public class XSkat extends Activity {
             home_skat();
             if (iscomp(spieler) && !handsp)
                 calc_drueck();
-            stsum = cardw[cards[30] & 7] + cardw[cards[31] & 7];
+            stsum = cardValues[cards[30] & 7] + cardValues[cards[31] & 7];
             save_skat(1);
         }
         if (!iscomp(spieler) && !handsp)
@@ -4329,14 +4345,14 @@ public class XSkat extends Activity {
         if (trumpf == 4 && ouveang && oldrules)
             spwert = (f - 1) * 36;
         else
-            spwert = f * rwert[trumpf];
-        if ((stsum > 60 && spwert >= reizw[reizp] && (stsum >= 90 || !schnang)
+            spwert = f * reizBaseValues[trumpf];
+        if ((stsum > 60 && spwert >= reizValues[reizp] && (stsum >= 90 || !schnang)
                 && (schwz || !schwang) && (spitzeok || !spitzeang))
                 || stich == 1) {
             spgew = true;
             nspwert = spwert;
         } else {
-            if (spwert < reizw[reizp])
+            if (spwert < reizValues[reizp])
                 mes1 = true;
             else if (schnang && stsum < 90)
                 mes2 = true;
@@ -4345,9 +4361,9 @@ public class XSkat extends Activity {
             else if (spitzeang && !spitzeok)
                 mes4 = true;
             spgew = false;
-            if (spwert < reizw[reizp]) {
-                spwert = ((reizw[reizp] - 1) / rwert[trumpf] + 1)
-                        * rwert[trumpf];
+            if (spwert < reizValues[reizp]) {
+                spwert = ((reizValues[reizp] - 1) / reizBaseValues[trumpf] + 1)
+                        * reizBaseValues[trumpf];
             }
             if (!handsp || !oldrules)
                 spwert *= 2;
@@ -4395,16 +4411,16 @@ public class XSkat extends Activity {
         if (spieler == ausspl) {
             if (butternok == 1)
                 butternok = 2;
-            stsum += cardw[stcd[0] & 7] + cardw[stcd[1] & 7]
-                    + cardw[stcd[2] & 7];
-            astsum += cardw[stcd[0] & 7] + cardw[stcd[1] & 7]
-                    + cardw[stcd[2] & 7];
+            stsum += cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7]
+                    + cardValues[stcd[2] & 7];
+            astsum += cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7]
+                    + cardValues[stcd[2] & 7];
             nullv = true;
         } else {
             if (butternok != 2)
                 butternok = 0;
-            gstsum += cardw[stcd[0] & 7] + cardw[stcd[1] & 7]
-                    + cardw[stcd[2] & 7];
+            gstsum += cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7]
+                    + cardValues[stcd[2] & 7];
             schwz = false;
         }
     }
@@ -4757,7 +4773,7 @@ public class XSkat extends Activity {
 
         mi = right(ausspl);
         fb = stcd[0] >> 3;
-        if ((stcd[0] & 7) == BUBE || fb == trumpf || cardw[stcd[0] & 7] != 0
+        if ((stcd[0] & 7) == BUBE || fb == trumpf || cardValues[stcd[0] & 7] != 0
                 || hatnfb[mi][fb] == 1)
             return false;
         ih = 0;
@@ -4797,8 +4813,8 @@ public class XSkat extends Activity {
 
     boolean genugdrin() {
         return (stcd[0] >> 3 == cards[possi[0]] >> 3 && (cards[possi[0]] & 7) != BUBE)
-                || (trumpf != 4 && cardw[stcd[0] & 7] + cardw[stcd[1] & 7] > 0)
-                || cardw[stcd[0] & 7] + cardw[stcd[1] & 7] > 3 + rnd(1);
+                || (trumpf != 4 && cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7] > 0)
+                || cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7] > 3 + rnd(1);
     }
 
     boolean gewinnstich(int f) {
@@ -4814,11 +4830,11 @@ public class XSkat extends Activity {
             if (s > 59)
                 return false;
             if (s < 30) {
-                su = cardw[prot2.skat[0][0] & 7] + cardw[prot2.skat[0][1] & 7]
-                        + cardw[stcd[0] & 7] + cardw[stcd[1] & 7];
+                su = cardValues[prot2.skat[0][0] & 7] + cardValues[prot2.skat[0][1] & 7]
+                        + cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7];
                 for (i = 0; i < 30; i++) {
                     if (cards[i] >= 0)
-                        su += cardw[cards[i] & 7];
+                        su += cardValues[cards[i] & 7];
                 }
                 if (su + s < 60)
                     sf = 1;
@@ -4829,13 +4845,13 @@ public class XSkat extends Activity {
         for (i = 0; i < possc; i++) {
             ci = cards[possi[i]];
             if (!higher(stcd[p ? 1 : 0], ci) || g) {
-                if (s + cardw[ci & 7] + cardw[stcd[0] & 7] + cardw[stcd[1] & 7] > 59 + f) {
+                if (s + cardValues[ci & 7] + cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7] > 59 + f) {
                     playcd = i;
                     return true;
                 }
                 if (sf != 0
-                        && s + cardw[ci & 7] + cardw[stcd[0] & 7]
-                                + cardw[stcd[1] & 7] > 30) {
+                        && s + cardValues[ci & 7] + cardValues[stcd[0] & 7]
+                                + cardValues[stcd[1] & 7] > 30) {
                     playcd = i;
                     return true;
                 }
@@ -4861,8 +4877,8 @@ public class XSkat extends Activity {
             if (!higher(stcd[p], ci)) {
                 if (j != 0) {
                     cj = cards[possi[j - 1]];
-                    wi = cardw[ci & 7];
-                    wj = cardw[cj & 7];
+                    wi = cardValues[ci & 7];
+                    wj = cardValues[cj & 7];
                     if (is) {
                         if (h != 0) {
                             calc_high(1, 1);
@@ -4920,7 +4936,7 @@ public class XSkat extends Activity {
         }
         if (j != 0) {
             cj = cards[possi[j - 1]];
-            wj = cardw[cj & 7];
+            wj = cardValues[cj & 7];
             if (is
                     && vmh == 1
                     && wj > 4
@@ -4953,8 +4969,8 @@ public class XSkat extends Activity {
             }
         }
         for (i = 1; i < possc; i++) {
-            wi = cardw[(ci = cards[possi[i]]) & 7];
-            wj = cardw[(cj = cards[possi[j]]) & 7];
+            wi = cardValues[(ci = cards[possi[i]]) & 7];
+            wj = cardValues[(cj = cards[possi[j]]) & 7];
             if (wi == 2)
                 wi = -2;
             else if (ci >> 3 == trumpf && cj >> 3 != trumpf)
@@ -4977,7 +4993,7 @@ public class XSkat extends Activity {
     boolean einstechen() {
         int ci;
 
-        if (cardw[stcd[0] & 7] == 0 || !uebernehmen(0, 0, 0))
+        if (cardValues[stcd[0] & 7] == 0 || !uebernehmen(0, 0, 0))
             return false;
         ci = cards[possi[playcd]];
         if ((ci & 7) <= ZEHN || (ci & 7) == BUBE)
@@ -5084,7 +5100,7 @@ public class XSkat extends Activity {
                 trdr++;
         for (i = 0; i < possc; i++) {
             if (cards[possi[i]] >> 3 == trumpf || (cards[possi[i]] & 7) == BUBE) {
-                wi = cardw[cards[possi[i]] & 7];
+                wi = cardValues[cards[possi[i]] & 7];
                 if (wi == 2 && trdr - tr != 1)
                     wi = -1;
                 if (j < 0 || wi < wj) {
@@ -5127,7 +5143,7 @@ public class XSkat extends Activity {
         if ((tr > 2 && (trumpf != 4 || trdr - tr != 0))
                 || (tr > 1 && trdr - tr != 0 && trdr - tr <= 2)) {
             playcd = k != possc
-                    && (trdr - tr == 2 || cardw[cards[possi[k]] & 7] == 0) ? k
+                    && (trdr - tr == 2 || cardValues[cards[possi[k]] & 7] == 0) ? k
                     : j;
             return true;
         }
@@ -5188,8 +5204,8 @@ public class XSkat extends Activity {
         for (i = 1; i < possc; i++) {
             ci = cards[possi[i]];
             cj = cards[possi[j]];
-            wi = cardw[iw = (ci & 7)];
-            wj = cardw[jw = (cj & 7)];
+            wi = cardValues[iw = (ci & 7)];
+            wj = cardValues[jw = (cj & 7)];
             if (wi == 2)
                 wi = 5;
             if (wj == 2)
@@ -5219,8 +5235,8 @@ public class XSkat extends Activity {
             for (i = 1; i < possc; i++) {
                 ci = cards[possi[i]];
                 cj = cards[possi[j]];
-                wi = cardw[iw = (ci & 7)];
-                wj = cardw[jw = (cj & 7)];
+                wi = cardValues[iw = (ci & 7)];
+                wj = cardValues[jw = (cj & 7)];
                 if (ci >> 3 == cj >> 3 && ze[ci >> 3] != 0 && ko[ci >> 3] != 0
                         && ih[ci >> 3] > 2) {
                     if (((wi == 4 && da[ci >> 3] == 0 && ne[ci >> 3] == 0)
@@ -5257,8 +5273,8 @@ public class XSkat extends Activity {
 
         fb = stcd[0] >> 3;
         if (hatnfb[spieler][fb] == 0
-                || (vmh == 2 && cardw[stcd[0] & 7] + cardw[stcd[1] & 7] > 4)
-                || (vmh == 1 && cardw[stcd[0] & 7] > 0))
+                || (vmh == 2 && cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7] > 4)
+                || (vmh == 1 && cardValues[stcd[0] & 7] > 0))
             return false;
         n[0] = n[1] = n[2] = n[3] = 0;
         for (i = 0; i < possc; i++) {
@@ -5271,7 +5287,7 @@ public class XSkat extends Activity {
         for (i = 0; i < possc; i++) {
             ci = cards[possi[i]];
             fb = ci >> 3;
-            if ((ci & 7) != BUBE && fb != trumpf && cardw[ci & 7] <= 4
+            if ((ci & 7) != BUBE && fb != trumpf && cardValues[ci & 7] <= 4
                     && n[fb] == 1 && ci != high[fb]) {
                 playcd = i;
                 return true;
@@ -5303,8 +5319,8 @@ public class XSkat extends Activity {
         for (i = 1; i < possc; i++) {
             ci = cards[possi[i]];
             cj = cards[possi[j]];
-            wi = cardw[ci & 7];
-            wj = cardw[cj & 7];
+            wi = cardValues[ci & 7];
+            wj = cardValues[cj & 7];
             wio = wi;
             wjo = wj;
             if (wi == 2)
@@ -5439,12 +5455,12 @@ public class XSkat extends Activity {
                                 wj += 3;
                             if (vmh == 1 && spieler != ausspl) {
                                 if (wi > 1 && wi < 5 && wj == 0
-                                        && cardw[stcd[0] & 7] == 0
+                                        && cardValues[stcd[0] & 7] == 0
                                         && hatnfb[spieler][stcd[0] >> 3] != 0) {
                                     wi = 1;
                                     wj = 2;
                                 } else if (wj > 1 && wj < 5 && wi == 0
-                                        && cardw[stcd[0] & 7] == 0
+                                        && cardValues[stcd[0] & 7] == 0
                                         && hatnfb[spieler][stcd[0] >> 3] != 0) {
                                     wi = 2;
                                     wj = 1;
@@ -5455,7 +5471,7 @@ public class XSkat extends Activity {
                 }
             }
             if (wi < wj
-                    || (wi == wj && cardw[ci & 7] == 0 && cardw[cj & 7] == 0 && (ci & 7) > (cj & 7)))
+                    || (wi == wj && cardValues[ci & 7] == 0 && cardValues[cj & 7] == 0 && (ci & 7) > (cj & 7)))
                 j = i;
         }
         playcd = j;
@@ -5488,7 +5504,7 @@ public class XSkat extends Activity {
                             || gespcd[1 << 3 | BUBE] == 2
                             || gespcd[2 << 3 | BUBE] == 2 || gespcd[3 << 3
                             | BUBE] == 2))
-                    || (cardw[stcd[0] & 7] > 4 && rnd(1) > 0))
+                    || (cardValues[stcd[0] & 7] > 4 && rnd(1) > 0))
                 return false;
             if (butternok != 0)
                 return rnd(1) != 0;
@@ -5510,7 +5526,7 @@ public class XSkat extends Activity {
                 as = i + 1;
         }
         if (as == 0 || (stcd[0] & 7) == BUBE || f == trumpf
-                || cardw[stcd[0] & 7] > 4 || hatnfb[spieler][f] != 0)
+                || cardValues[stcd[0] & 7] > 4 || hatnfb[spieler][f] != 0)
             return false;
         playcd = as - 1;
         return true;
@@ -6554,7 +6570,7 @@ public class XSkat extends Activity {
         int pc;
 
         if (stich >= 7
-                || cardw[stcd[0] & 7] + cardw[stcd[1] & 7] > 4
+                || cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7] > 4
                 || (gespcd[BUBE] != 2 && gespcd[1 << 3 | BUBE] != 2
                         && gespcd[2 << 3 | BUBE] != 2 && gespcd[3 << 3 | BUBE] != 2))
             return;
@@ -6653,7 +6669,7 @@ public class XSkat extends Activity {
         for (i = 0; i < possc; i++) {
             if (!higher(stcd[h], cards[possi[i]])) {
                 if (j == 0
-                        || cardw[cards[possi[i]] & 7] < cardw[cards[possi[j - 1]] & 7]) {
+                        || cardValues[cards[possi[i]] & 7] < cardValues[cards[possi[j - 1]] & 7]) {
                     j = i + 1;
                 }
             }
@@ -6794,7 +6810,7 @@ public class XSkat extends Activity {
         }
         for (i = 0; i < 2; i++) {
             for (j = 0; j < 10; j++) {
-                if (cardw[cards[10 * sn + j] & 7] > cardw[cards[30 + i] & 7]) {
+                if (cardValues[cards[10 * sn + j] & 7] > cardValues[cards[30 + i] & 7]) {
                     swap(cards, 30 + i, 10 * sn + j);
                 }
             }
@@ -6815,7 +6831,7 @@ public class XSkat extends Activity {
         for (i = 0; i < 12; i++) {
             c = spcards[i];
             if ((c & 7) != BUBE) {
-                p[c >> 3] += cardw[c & 7];
+                p[c >> 3] += cardValues[c & 7];
                 t[c >> 3]++;
                 inhand[c >> 3][c & 7] = true;
             } else {
@@ -6891,12 +6907,12 @@ public class XSkat extends Activity {
     }
 
     void ramsch_stich() {
-        rstsum[ausspl] += cardw[stcd[0] & 7] + cardw[stcd[1] & 7]
-                + cardw[stcd[2] & 7];
+        rstsum[ausspl] += cardValues[stcd[0] & 7] + cardValues[stcd[1] & 7]
+                + cardValues[stcd[2] & 7];
         rstich[ausspl] = true;
         if (stich == 10) {
-            rskatsum = cardw[prot2.skat[1][0] & 7]
-                    + cardw[prot2.skat[1][1] & 7];
+            rskatsum = cardValues[prot2.skat[1][0] & 7]
+                    + cardValues[prot2.skat[1][1] & 7];
             if (rskatloser == 0) {
                 rstsum[ausspl] += rskatsum;
             }
@@ -7421,7 +7437,7 @@ public class XSkat extends Activity {
         v.setTypeface(null, Typeface.NORMAL);
 
         int[] points = new int[]{0, 0, 0};
-        int skat = cardw[prot1.skat[1][0] & 7] + cardw[prot1.skat[1][1] & 7];
+        int skat = cardValues[prot1.skat[1][0] & 7] + cardValues[prot1.skat[1][1] & 7];
         if (prot1.trumpf != 5) {
             // if it is not Ramsch add the points for the skat to the single player
             points[prot1.spieler] = skat;
@@ -7474,7 +7490,7 @@ public class XSkat extends Activity {
             }
             TextView tv = (TextView) findViewById(spMat[3][i]);
             if (tv != null) {
-                int trick = cardw[stiche[i][0] & 7] + cardw[stiche[i][1] & 7] + cardw[stiche[i][2] & 7];
+                int trick = cardValues[stiche[i][0] & 7] + cardValues[stiche[i][1] & 7] + cardValues[stiche[i][2] & 7];
                 points[prot1.gemacht[i]] += trick;
                 if (protsort[sn] || prot1.trumpf < 0) {
                     tv.setText("");
@@ -7537,6 +7553,10 @@ public class XSkat extends Activity {
         prot_fun(sn);
     }
 
+    /**
+     * Shows the result of the recently finished game.
+     * @param be
+     */
     void di_result(int be) {
         initResultStr();
         View vp = findViewById(R.id.playVMHLeft);
@@ -7548,12 +7568,12 @@ public class XSkat extends Activity {
         boolean b0 = spieler == 0;
         boolean b1 = spieler == 1;
         boolean b2 = spieler == 2;
-        if (spgew && (alist[0] == 1 || (trumpf == 5 && stsum != 120))) {
+        if (spgew && (alist[0] == 1 || (GameType.isRamsch(trumpf) && stsum != 120))) {
             b0 = !b0;
             b1 = !b1;
             b2 = !b2;
         }
-        if (trumpf == 5 && spwert == 0) {
+        if (GameType.isRamsch(trumpf) && spwert == 0) {
             b0 = b1 = b2 = false;
         }
         TextView v = (TextView) findViewById(R.id.textSpielstandPlayer);
@@ -8080,7 +8100,7 @@ public class XSkat extends Activity {
         home_skat();
         save_skat(1);
         for (c = 0; c < 2; c++) {
-            stsum += cardw[cards[c + 30] & 7];
+            stsum += cardValues[cards[c + 30] & 7];
             gespcd[cards[c + 30]] = 1;
             cards[c + 30] = -1;
         }
