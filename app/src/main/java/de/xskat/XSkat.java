@@ -175,7 +175,7 @@ public class XSkat extends Activity {
                 showDialogFromMenu(R.id.dialogListe);
                 return true;
             case R.id.menuStatistics:
-                di_statistics(StatResolution.MAXIMAL);
+                di_statistics(StatResolution.of(currentStatResolution));
                 showDialogFromMenu(R.id.dialogStatisticsPoints);
                 return true;
             default:
