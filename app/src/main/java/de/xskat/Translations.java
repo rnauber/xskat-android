@@ -42,7 +42,7 @@ public class Translations {
             {"den Ramsch.", "the Ramsch."}, // XT_den_Ramsch
             {"schwarz.", "schwarz."}, // XT_schwarz
             {"mit", "with"}, // XT_mit
-            {"Augen.", "points."}, // XT_Augen
+            {"Augen", "points"}, // XT_Augen
             {"Spielwert", "Game value"}, // XT_Spielwert
             {"Ja", "Yes"}, // XT_Ja
             {"Weiter", "Continue"}, // XT_Weiter
@@ -133,7 +133,9 @@ public class Translations {
             {"Zurück", "Back"}, // XT_Zurueck
             {"Start", "Start"}, // XT_Start
             {"Animationsgeschwindigkeit", "Animation speed"}, // XT_AnimationSpeed
-            {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"} // XT_github_xskat / 124
+            {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"}, // XT_github_xskat / 124
+            {"Statistiken", "Statistics"}, // XT_MenuStatistics / 125
+            {"Summe", "Sum"} // XT_Sum / 126
     };
 
     static final int XT_Null = 0;
@@ -261,6 +263,8 @@ public class Translations {
     static final int XT_Start = 122;
     static final int XT_AnimationSpeed = 123;
     static final int XT_github_xskat = 124;
+    static final int XT_MenuStatistics = 125;
+    static final int XT_Sum = 126;
 
     static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];

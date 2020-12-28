@@ -20,4 +20,8 @@
         android:id="@+id/menuList"
         android:showAsAction="never"
         android:title="#Liste"/>
+    <item
+        android:id="@+id/menuStatistics"
+        android:showAsAction="never"
+        android:title="#Stats"/>
 </menu>

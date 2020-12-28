@@ -194,6 +194,8 @@
 
             <include layout="@layout/dialogliste" />
 
+            <include layout="@layout/dialogstatisticspoints" />
+
             <include layout="@layout/dialogloeschen" />
 
             <include layout="@layout/dialogcopyright" />
