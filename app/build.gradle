@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "de.xskat"
         minSdkVersion 3
-        targetSdkVersion 24
+        targetSdkVersion 30
         versionCode 14
         versionName "1.4.fdroid"
         compileOptions {
