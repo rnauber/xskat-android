@@ -1995,7 +1995,7 @@ public class XSkat extends Activity {
     }
 
     void initHandStr() {
-        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp]);
+        setText(R.id.textGereiztHand, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizValues[reizp]);
     }
 
     void initVerdoppeltStr() {
@@ -2060,7 +2060,7 @@ public class XSkat extends Activity {
     }
 
     void initSpielStr() {
-        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp]);
+        setText(R.id.textGereizt, getTranslation(Translations.XT_Gereizt_bis) + ": " + reizValues[reizp]);
     }
 
     void initStichStr() {
@@ -2113,7 +2113,7 @@ public class XSkat extends Activity {
         if (GameType.isRamsch(trumpf)) {
             v.setText("");
         } else {
-            s = getTranslation(Translations.XT_Gereizt_bis) + reizValues[reizp];
+            s = getTranslation(Translations.XT_Gereizt_bis) + ": " + reizValues[reizp];
             v.setText(s);
         }
     }
