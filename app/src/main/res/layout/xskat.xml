@@ -194,13 +194,13 @@
 
             <include layout="@layout/dialogliste" />
 
-            <include layout="@layout/dialogstatisticspoints" />
-
             <include layout="@layout/dialogloeschen" />
 
             <include layout="@layout/dialogcopyright" />
 
             <include layout="@layout/dialogoptions" />
+
+            <include layout="@layout/dialogstatisticspoints" />
 
             <include layout="@layout/dialogblatt" />
 

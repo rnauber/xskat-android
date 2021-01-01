@@ -4,64 +4,66 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textStatisticsPoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="#"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="24"
         android:baselineAligned="false"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <ScrollView
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="vertical">
+                    <TableLayout
+                        android:id="@+id/table_main_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </HorizontalScrollView>
+        </ScrollView>
 
-                        <TableLayout
-                            android:id="@+id/table_main_header"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true" />
-                    </RelativeLayout>
-                </HorizontalScrollView>
-            </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ScrollView
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:orientation="vertical">
-
-                        <TableLayout
-                            android:id="@+id/table_main"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true" />
-                    </RelativeLayout>
-                </HorizontalScrollView>
-            </ScrollView>
-        </LinearLayout>
+                    <TableLayout
+                        android:id="@+id/table_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" />
+                </RelativeLayout>
+            </HorizontalScrollView>
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout
@@ -69,27 +71,21 @@
         android:layout_height="0dp"
         android:layout_weight="3">
 
-        <!--Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:onClick="clickedSpace"
-            android:visibility="invisible" /-->
-        <Button android:id="@+id/buttonStatPointsLess"
+        <Button
+            android:id="@+id/buttonStatPointsLess"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:onClick="clickedStatPointsLess"
-            android:text="-"
-            />
+            android:text="-" />
 
-        <Button android:id="@+id/buttonStatPointsMore"
+        <Button
+            android:id="@+id/buttonStatPointsMore"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:onClick="clickedStatPointsMore"
-            android:text="+"
-            />
+            android:text="+" />
 
         <Button
             android:id="@+id/buttonStatPointsOK"
@@ -107,11 +103,5 @@
             android:onClick="clickedStatPointsLoeschen"
             android:text="#Löschen" />
 
-        <!--Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:onClick="clickedSpace"
-            android:visibility="invisible" /-->
     </LinearLayout>
 </LinearLayout>
