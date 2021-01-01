@@ -45,10 +45,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +54,7 @@ import java.util.Locale;
 import de.xskat.data.GameType;
 import de.xskat.data.Pair;
 import de.xskat.enums.StatResolution;
+import de.xskat.stats.PointStatistics;
 
 public class XSkat extends Activity {
 
@@ -175,6 +174,7 @@ public class XSkat extends Activity {
                 showDialogFromMenu(R.id.dialogListe);
                 return true;
             case R.id.menuStatistics:
+                checkStatPointsButtons();
                 di_statistics(StatResolution.of(currentStatResolution));
                 showDialogFromMenu(R.id.dialogStatisticsPoints);
                 return true;
@@ -958,11 +958,27 @@ public class XSkat extends Activity {
         setVisible(R.id.mainScreen);
     }
 
+    void checkStatPointsButtons() {
+        Button buttonLess = findViewById(R.id.buttonStatPointsLess);
+        Button buttonMore = findViewById(R.id.buttonStatPointsMore);
+        if (currentStatResolution == 1) {
+            buttonLess.setEnabled(true);
+            buttonMore.setEnabled(true);
+        } else if (currentStatResolution == 0) {
+            buttonLess.setEnabled(false);
+            buttonMore.setEnabled(true);
+        } else if (currentStatResolution == 2) {
+            buttonLess.setEnabled(true);
+            buttonMore.setEnabled(false);
+        }
+    }
+
     public void clickedStatPointsLess(View view) {
         StatResolution resolution = StatResolution.of(currentStatResolution).getLess();
         currentStatResolution = resolution.value();
         di_statistics(resolution);
         showDialogFromMenu(R.id.dialogStatisticsPoints);
+        checkStatPointsButtons();
     }
 
     public void clickedStatPointsMore(View view) {
@@ -970,6 +986,7 @@ public class XSkat extends Activity {
         currentStatResolution = resolution.value();
         di_statistics(resolution);
         showDialogFromMenu(R.id.dialogStatisticsPoints);
+        checkStatPointsButtons();
     }
 
     public void clickedLoeschenJa(View view) {
@@ -3002,7 +3019,7 @@ public class XSkat extends Activity {
     int[] strateg = new int[3];
     int animSpeed = 0;
     int[][] pointsStatistic = new int[3][121];
-    int currentStatResolution = 3;
+    int currentStatResolution = StatResolution.MAXIMAL.value();
     int[][] sgewoverl = new int[3][2];
     int[][] splsum = new int[3][3];
 
@@ -7464,87 +7481,18 @@ public class XSkat extends Activity {
     void di_delliste() {
     }
 
-    int sum(int[] array) {
-        int result = 0;
-        for (int k : array) {
-            result += k;
-        }
-        return result;
-    }
-
     /**
      * Build the statistics table for reached points in one game.
      */
     void di_statistics(StatResolution resolution) {
-        List<Pair<String, int[]>> compute = resolution.compute(pointsStatistic);
-        TableLayout tableHeader = (TableLayout) findViewById(R.id.table_main_header);
-        tableHeader.removeAllViews();
+        TextView viewById = findViewById(R.id.textStatisticsPoints);
+        viewById.setText(getTranslation(Translations.XT_PointDistribution));
+        TableLayout tableHeader = findViewById(R.id.table_main_header);
+        PointStatistics.createTableHeader(this, tableHeader, pointsStatistic, currLang);
 
-        TableRow tableRowHeader = new TableRow(this);
-
-        LayoutParams tableRowParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        tableRowHeader.setLayoutParams(tableRowParams);
-
-        for (String header : Arrays.asList(getTranslation(Translations.XT_Augen), "", getTranslation(Translations.XT_Spieler), getTranslation(Translations.XT_Androido), getTranslation(Translations.XT_Androida))) {
-            TextView headerTextView = new TextView(this);
-            headerTextView.setText(header);
-            headerTextView.setTypeface(null, Typeface.BOLD);
-            headerTextView.setGravity(Gravity.CENTER);
-            headerTextView.setWidth(170);
-            tableRowHeader.addView(headerTextView);
-        }
-        tableHeader.addView(tableRowHeader);
-
-        TableRow tableRowSumHeader = new TableRow(this);
-        LayoutParams tableRowSumParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        tableRowSumHeader.setLayoutParams(tableRowSumParams);
-
-        TextView empty = new TextView(this);
-        empty.setText(getTranslation(Translations.XT_Sum));
-        empty.setGravity(Gravity.CENTER);
-        empty.setWidth(170);
-        tableRowSumHeader.addView(empty);
-        int[] sum = new int[]{sum(pointsStatistic[0]), sum(pointsStatistic[1]), sum(pointsStatistic[2])};
-        TextView allSum = new TextView(this);
-        allSum.setText(String.valueOf(sum(sum)));
-        allSum.setGravity(Gravity.CENTER);
-        allSum.setWidth(170);
-        tableRowSumHeader.addView(allSum);
-        for (int value : sum) {
-            TextView sumView = new TextView(this);
-            sumView.setText(String.valueOf(value));
-            sumView.setGravity(Gravity.CENTER);
-            sumView.setWidth(170);
-            tableRowSumHeader.addView(sumView);
-        }
-        tableHeader.addView(tableRowSumHeader);
-
-        TableLayout tableBody = (TableLayout) findViewById(R.id.table_main);
-        tableBody.removeAllViews();
-        if (!compute.isEmpty()) {
-            for (int i = 0; i < compute.size(); ++i) {
-                Pair<String, int[]> line = compute.get(i);
-                TableRow tableRow = new TableRow(this);
-                TextView textView = new TextView(this);
-                textView.setText(line.getLeft());
-                textView.setGravity(Gravity.CENTER);
-                textView.setWidth(170);
-                tableRow.addView(textView);
-
-                int[] numbers = line.getRight();
-                for (int j = 0; j < numbers.length; j++) {
-                    TextView textView2 = new TextView(this);
-                    textView2.setText(String.valueOf(numbers[j]));
-                    textView2.setGravity(Gravity.CENTER);
-                    textView2.setWidth(170);
-                    if (j > 0 && numbers[j] != 0) {
-                        textView2.setTypeface(null, Typeface.BOLD);
-                    }
-                    tableRow.addView(textView2);
-                }
-                tableBody.addView(tableRow);
-            }
-        }
+        TableLayout tableBody = findViewById(R.id.table_main);
+        List<Pair<String, int[]>> compute = PointStatistics.compute(resolution, pointsStatistic);
+        PointStatistics.createTable(this, tableBody, compute);
     }
 
     void di_liste(int sn, boolean ini) {
