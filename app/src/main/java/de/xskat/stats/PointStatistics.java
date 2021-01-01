@@ -144,7 +144,8 @@ public class PointStatistics {
             modi.add(Pair.of("0-30", new int[]{0, 30}));
             modi.add(Pair.of("31-60", new int[]{31, 60}));
             modi.add(Pair.of("61-89", new int[]{61, 89}));
-            modi.add(Pair.of("90-120", new int[]{90, 120}));
+            modi.add(Pair.of("90-118", new int[]{90, 118}));
+            modi.add(Pair.of("120", new int[]{120, 120}));
             return process(modi, input);
         }
         return new ArrayList<Pair<String, int[]>>();
