@@ -136,7 +136,7 @@ public class Translations {
             {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"}, // XT_github_xskat / 124
             {"Statistiken", "Statistics"}, // XT_MenuStatistics / 125
             {"Summe", "Sum"}, // XT_Sum / 126
-            {"Verteilung der errichten Punkte", "Distribution of reached points"} // XT_PointDistribution / 127
+            {"Verteilung der erreichten Punkte", "Distribution of reached points"} // XT_PointDistribution / 127
     };
 
     public static final int XT_Null = 0;
