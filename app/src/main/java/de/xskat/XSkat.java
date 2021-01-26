@@ -1253,6 +1253,7 @@ public class XSkat extends Activity {
             for (int j = 0; j < 2; j++)
                 nimmstich[i][j] = prefs.getInt("nimmstich" + i + "." + j,
                         j == 0 ? 101 : 0);
+        animSpeed = prefs.getInt("animSpeed", 0);
     }
 
     void initCallback() {
