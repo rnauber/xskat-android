@@ -44,12 +44,17 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import de.xskat.data.GameType;
+import de.xskat.data.Pair;
+import de.xskat.enums.StatResolution;
+import de.xskat.stats.PointStatistics;
 
 public class XSkat extends Activity {
 
@@ -168,6 +173,11 @@ public class XSkat extends Activity {
                 di_liste(0, true);
                 showDialogFromMenu(R.id.dialogListe);
                 return true;
+            case R.id.menuStatistics:
+                checkStatPointsButtons();
+                di_statistics(StatResolution.of(currentStatResolution));
+                showDialogFromMenu(R.id.dialogStatisticsPoints);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -183,6 +193,7 @@ public class XSkat extends Activity {
         createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
         createMenu(menu, R.id.menuSort, sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
         createMenu(menu, R.id.menuList, Translations.XT_Liste, true);
+        createMenu(menu, R.id.menuStatistics, Translations.XT_MenuStatistics, true);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -264,13 +275,10 @@ public class XSkat extends Activity {
                 trumpf = 0;
             } else if (isSelected(R.id.buttonHerz)) {
                 trumpf = 1;
-
             } else if (isSelected(R.id.buttonPik)) {
                 trumpf = 2;
-
             } else if (isSelected(R.id.buttonKreuz)) {
                 trumpf = 3;
-
             } else if (isSelected(R.id.buttonGrand)) {
                 trumpf = 4;
             }
@@ -941,6 +949,46 @@ public class XSkat extends Activity {
         setVisible(R.id.dialogLoeschen);
     }
 
+    public void clickedStatPointsLoeschen(View view) {
+        if (discardInput) {
+            return;
+        }
+        pointsStatistic = new int[3][121];
+        setGone(R.id.dialogStatisticsPoints);
+        setVisible(R.id.mainScreen);
+    }
+
+    void checkStatPointsButtons() {
+        Button buttonLess = findViewById(R.id.buttonStatPointsLess);
+        Button buttonMore = findViewById(R.id.buttonStatPointsMore);
+        if (currentStatResolution == 1) {
+            buttonLess.setEnabled(true);
+            buttonMore.setEnabled(true);
+        } else if (currentStatResolution == 0) {
+            buttonLess.setEnabled(false);
+            buttonMore.setEnabled(true);
+        } else if (currentStatResolution == 2) {
+            buttonLess.setEnabled(true);
+            buttonMore.setEnabled(false);
+        }
+    }
+
+    public void clickedStatPointsLess(View view) {
+        StatResolution resolution = StatResolution.of(currentStatResolution).getLess();
+        currentStatResolution = resolution.value();
+        di_statistics(resolution);
+        showDialogFromMenu(R.id.dialogStatisticsPoints);
+        checkStatPointsButtons();
+    }
+
+    public void clickedStatPointsMore(View view) {
+        StatResolution resolution = StatResolution.of(currentStatResolution).getMore();
+        currentStatResolution = resolution.value();
+        di_statistics(resolution);
+        showDialogFromMenu(R.id.dialogStatisticsPoints);
+        checkStatPointsButtons();
+    }
+
     public void clickedLoeschenJa(View view) {
         if (discardInput)
             return;
@@ -1266,6 +1314,11 @@ public class XSkat extends Activity {
             for (int j = 0; j < 2; j++)
                 nimmstich[i][j] = prefs.getInt("nimmstich" + i + "." + j,
                         j == 0 ? 101 : 0);
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 121; ++j) {
+                pointsStatistic[i][j] = prefs.getInt("p_" + i + "_"+ j, 0);
+            }
+        }
         animSpeed = prefs.getInt("animSpeed", 0);
     }
 
@@ -1456,7 +1509,7 @@ public class XSkat extends Activity {
                     if (nd)
                         di_dicht();
                     else
-                        finishgame();
+                        finishGame();
                 }
                 computer();
                 break;
@@ -1753,6 +1806,13 @@ public class XSkat extends Activity {
         setText(R.id.buttonListeOK, getTranslation(Translations.XT_Weiter));
         setText(R.id.buttonListeLoeschen, getTranslation(Translations.XT_Loeschen));
 
+        setDeselectedAndSize(R.id.buttonStatPointsLess);
+        setDeselectedAndSize(R.id.buttonStatPointsMore);
+        setDeselectedAndSize(R.id.buttonStatPointsOK);
+        setDeselectedAndSize(R.id.buttonStatPointsLoeschen);
+        setText(R.id.buttonStatPointsOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonStatPointsLoeschen, getTranslation(Translations.XT_Loeschen));
+
         setTitleTextSize(R.id.dialogLoeschenL1);
         setTextSize(R.id.dialogLoeschenL2);
         setTextSize(R.id.dialogLoeschenL3);
@@ -1983,7 +2043,12 @@ public class XSkat extends Activity {
     }
 
     void setVisible(int id) {
-        setVisible(findViewById(id));
+        View viewById = findViewById(id);
+        if (viewById != null) {
+            setVisible(viewById);
+        } else {
+            throw new NullPointerException("Could not find view with id " + id);
+        }
     }
 
     void setInvisible(View view) {
@@ -2006,6 +2071,7 @@ public class XSkat extends Activity {
         setGone(R.id.dialogRamschVarianten);
         setGone(R.id.dialogStich);
         setGone(R.id.dialogWiederholen);
+        setGone(R.id.dialogStatisticsPoints);
     }
 
     void initHandStr() {
@@ -2117,7 +2183,7 @@ public class XSkat extends Activity {
             } else if ((spgew && schwz) || !nullv) {
                 s = getTranslation(Translations.XT_schwarz);
             } else {
-                s = getTranslation(Translations.XT_mit) + " " + stsum + " " + getTranslation(Translations.XT_Augen);
+                s = getTranslation(Translations.XT_mit) + " " + stsum + " " + getTranslation(Translations.XT_Augen) + ".";
             }
         }
         s += " " + getTranslation(Translations.XT_Spielwert) + ": "
@@ -2952,6 +3018,8 @@ public class XSkat extends Activity {
     int currLang;
     int[] strateg = new int[3];
     int animSpeed = 0;
+    int[][] pointsStatistic = new int[3][121];
+    int currentStatResolution = StatResolution.MAXIMAL.value();
     int[][] sgewoverl = new int[3][2];
     int[][] splsum = new int[3][3];
 
@@ -4297,10 +4365,12 @@ public class XSkat extends Activity {
 
         mes1 = mes2 = mes3 = mes4 = false;
         if (trumpf == 5) {
+            // Ramsch
             ramsch_result();
             return;
         }
         if (trumpf == -1) {
+            // Null
             spwert = nullw[revolang ? 4 : (ouveang ? 2 : 0) + (handsp ? 1 : 0)];
             if (nullv) {
                 spgew = false;
@@ -4440,18 +4510,16 @@ public class XSkat extends Activity {
     }
 
     void save_list() {
-        int i, j;
-
-        for (i = 0; i < 3; i++) {
-            for (j = 0; j < 3; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 editor.putInt("splsum" + i + "." + j, splsum[i][j]);
             }
-            for (j = 0; j < 2; j++) {
+            for (int j = 0; j < 2; j++) {
                 editor.putInt("sgewoverl" + i + "." + j, sgewoverl[i][j]);
             }
         }
         editor.putInt("splstp", splstp);
-        for (i = 0; i < LIST_LEN; i++) {
+        for (int i = 0; i < LIST_LEN; i++) {
             editor.putInt("splist" + i + ".s", splist[i].s);
             editor.putInt("splist" + i + ".e", splist[i].e);
             editor.putBoolean("splist" + i + ".r", splist[i].r);
@@ -4460,6 +4528,11 @@ public class XSkat extends Activity {
         }
         saveState();
         saveViews();
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 121; ++j) {
+                editor.putInt("p_" + i + "_" + j, pointsStatistic[i][j]);
+            }
+        }
         editor.commit();
     }
 
@@ -4616,7 +4689,7 @@ public class XSkat extends Activity {
         nimm_stich();
     }
 
-    void finishgame() {
+    void finishGame() {
         int i, s;
 
         if (stich < 11) {
@@ -4640,11 +4713,15 @@ public class XSkat extends Activity {
             }
         }
         calc_result();
+        if (trumpf >= 0 && trumpf <= 4) {
+            pointsStatistic[spieler][stsum]++;
+        }
         set_prot();
         prot1.assign(prot2);
         update_list();
-        if (playbock != 0)
+        if (playbock != 0) {
             bockinc = check_bockevents();
+        }
         save_list();
         clr_desk(false);
         phase = RESULT;
@@ -7402,6 +7479,20 @@ public class XSkat extends Activity {
     }
 
     void di_delliste() {
+    }
+
+    /**
+     * Build the statistics table for reached points in one game.
+     */
+    void di_statistics(StatResolution resolution) {
+        TextView viewById = findViewById(R.id.textStatisticsPoints);
+        viewById.setText(getTranslation(Translations.XT_PointDistribution));
+        TableLayout tableHeader = findViewById(R.id.table_main_header);
+        PointStatistics.createTableHeader(this, tableHeader, pointsStatistic, currLang);
+
+        TableLayout tableBody = findViewById(R.id.table_main);
+        List<Pair<String, int[]>> compute = PointStatistics.compute(resolution, pointsStatistic);
+        PointStatistics.createTable(this, tableBody, compute);
     }
 
     void di_liste(int sn, boolean ini) {

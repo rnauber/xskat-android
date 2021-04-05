@@ -200,6 +200,8 @@
 
             <include layout="@layout/dialogoptions" />
 
+            <include layout="@layout/dialogstatisticspoints" />
+
             <include layout="@layout/dialogblatt" />
 
             <include layout="@layout/dialogvarianten" />
