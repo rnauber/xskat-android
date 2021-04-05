@@ -118,6 +118,19 @@ public class XSkat extends Activity {
         return animSpeed == 1 ? R.id.buttonAnim0 : R.id.buttonAnimL;
     }
 
+    private int getButtonStrategieId(int storedValue) {
+        if (storedValue == 0) {
+            return R.id.buttonStaerkePP;
+        } else if(storedValue == -1) {
+            return R.id.buttonStaerkeP;
+        } else if(storedValue == -2) {
+            return R.id.buttonStaerke0;
+        } else if(storedValue == -3) {
+            return R.id.buttonStaerkeM;
+        }
+        return R.id.buttonStaerkeMM;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -125,7 +138,7 @@ public class XSkat extends Activity {
                 showDialogFromMenu(R.id.dialogCopyright);
                 return true;
             case R.id.menuOptions:
-                setSelected(R.id.buttonStaerkePP + strateg[0]);
+                setSelected(getButtonStrategieId(strateg[0]));
                 setSelected(getButtonSpeedId(animSpeed));
                 setSelected(R.id.buttonSpracheDE + currLang);
                 if (prot1.stiche[0][0] != 0 || prot1.stiche[0][1] != 0) {
