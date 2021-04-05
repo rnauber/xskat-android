@@ -479,30 +479,30 @@ public class XSkat extends Activity {
         int i, bb, c;
         boolean ag = false;
 
-        if (discardInput)
+        if (discardInput) {
             return;
-        if (isSelected(R.id.buttonNull) || isSelected(R.id.buttonRevolution))
+        }
+        if (isSelected(R.id.buttonNull) || isSelected(R.id.buttonRevolution)) {
             trumpf = -1;
-        else if (isSelected(R.id.buttonKaro))
+        } else if (isSelected(R.id.buttonKaro)) {
             trumpf = 0;
-        else if (isSelected(R.id.buttonHerz))
+        } else if (isSelected(R.id.buttonHerz)) {
             trumpf = 1;
-        else if (isSelected(R.id.buttonPik))
+        } else if (isSelected(R.id.buttonPik)) {
             trumpf = 2;
-        else if (isSelected(R.id.buttonKreuz))
+        } else if (isSelected(R.id.buttonKreuz)) {
             trumpf = 3;
-        else
+        } else {
             trumpf = 4;
-        if (!handsp
-                && trumpf != -1
+        }
+        if (!handsp && trumpf != -1
                 && (isSelected(R.id.buttonSchneider)
                         || isSelected(R.id.buttonSchwarz) || isSelected(R.id.buttonOuvert))) {
             setGone(R.id.dialogSpielen);
             setVisible(R.id.dialogFehler);
             ag = true;
         }
-        if (!ag
-                && trumpf == -1
+        if (!ag && trumpf == -1
                 && reizValues[reizp] > nullw[isSelected(R.id.buttonRevolution) ? 4
                         : (isSelected(R.id.buttonOuvert) ? 2 : 0)
                                 + (handsp ? 1 : 0)]) {
@@ -7340,10 +7340,26 @@ public class XSkat extends Activity {
         setDeselected(R.id.buttonSchneider);
         setDeselected(R.id.buttonSchwarz);
         setDeselected(R.id.buttonOuvert);
-        setSelected(R.id.buttonKaro + trumpf);
+        setSelected(getSpielButton(trumpf));
         initscr(0, 1);
         setGone(R.id.dialogDesk);
         setVisible(R.id.dialogSpielen);
+    }
+
+    private int getSpielButton(int trumpf) {
+        switch (trumpf) {
+            case 0:
+                return R.id.buttonKaro;
+            case 1:
+                return R.id.buttonHerz;
+            case 2:
+                return R.id.buttonPik;
+            case 3:
+                return R.id.buttonKreuz;
+            case 4:
+                return R.id.buttonGrand;
+            default: throw new RuntimeException("Unexpected Trump value: " + trumpf);
+        }
     }
 
     boolean di_verdoppelt(boolean f, boolean kl) {
