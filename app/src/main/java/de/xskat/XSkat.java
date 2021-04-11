@@ -117,10 +117,10 @@ public class XSkat extends Activity {
     }
 
     private int getButtonSpeedId(int animSpeed) {
-        if (animSpeed == 0) {
+        if (animSpeed == -2) {
             return R.id.buttonAnimS;
         }
-        return animSpeed == 1 ? R.id.buttonAnim0 : R.id.buttonAnimL;
+        return animSpeed == 0 ? R.id.buttonAnim0 : R.id.buttonAnimL;
     }
 
     private int getButtonStrategieId(int storedValue) {
@@ -319,9 +319,9 @@ public class XSkat extends Activity {
             if (isSelected(R.id.buttonAnimL)) {
                 v = 2;
             } else if (isSelected(R.id.buttonAnimS)) {
-                v = 0;
+                v = -2;
             } else {
-                v = 1;
+                v = 0;
             }
             if (v != animSpeed) {
                 editor.putInt("animSpeed", v);
@@ -1434,7 +1434,7 @@ public class XSkat extends Activity {
 
     void moveCardOverlay(final int card, final int fromId, final int toId,
             final int toX, final int toY, final int tail, final int p) {
-        final int steps = 3 + animSpeed;
+        final int steps = 6 + animSpeed;
 
         discardInput = true;
         if (p <= steps) {
