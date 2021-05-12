@@ -48,11 +48,11 @@ public class PointStatistics {
         WindowManager.LayoutParams tableRowSumParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         tableRowSumHeader.setLayoutParams(tableRowSumParams);
 
-        TextView empty = new TextView(parentActivity);
-        empty.setText(Translations.getTranslation(Translations.XT_Sum, currentLanguage));
-        empty.setGravity(Gravity.CENTER);
-        empty.setWidth(MAX_WIDTH);
-        tableRowSumHeader.addView(empty);
+        TextView textView = new TextView(parentActivity);
+        textView.setText(Translations.getTranslation(Translations.XT_Sum, currentLanguage));
+        textView.setGravity(Gravity.CENTER);
+        textView.setWidth(MAX_WIDTH);
+        tableRowSumHeader.addView(textView);
         int[] sum = new int[]{sum(pointsStatistic[0]), sum(pointsStatistic[1]), sum(pointsStatistic[2])};
         TextView allSum = new TextView(parentActivity);
         allSum.setText(String.valueOf(sum(sum)));
