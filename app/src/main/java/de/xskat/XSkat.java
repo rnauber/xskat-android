@@ -47,13 +47,16 @@ import android.widget.ImageView.ScaleType;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import de.xskat.data.GameType;
 import de.xskat.data.Pair;
+import de.xskat.data.Player;
 import de.xskat.enums.StatResolution;
+import de.xskat.stats.GameStatistics;
 import de.xskat.stats.PointStatistics;
 
 public class XSkat extends Activity {
@@ -175,7 +178,7 @@ public class XSkat extends Activity {
                 return true;
             case R.id.menuStatistics:
                 checkStatPointsButtons();
-                di_statistics(StatResolution.of(currentStatResolution));
+                di_pointStatistics(StatResolution.of(currentStatResolution));
                 showDialogFromMenu(R.id.dialogStatisticsPoints);
                 return true;
             default:
@@ -949,11 +952,28 @@ public class XSkat extends Activity {
         setVisible(R.id.dialogLoeschen);
     }
 
+    public void clickedStatsLoeschen(View view) {
+        if (discardInput) {
+            return;
+        }
+        setGone(R.id.dialogStatisticsGame);
+        setGone(R.id.dialogStatisticsPoints);
+        setVisible(R.id.dialogStatsLoeschen);
+    }
+
     public void clickedStatPointsLoeschen(View view) {
         if (discardInput) {
             return;
         }
-        pointsStatistic = new int[3][121];
+        initStatisticsArrays();
+        setGone(R.id.dialogStatisticsPoints);
+        setVisible(R.id.mainScreen);
+    }
+
+    public void clickedStatPointsLoeschenNein(View view) {
+        if (discardInput) {
+            return;
+        }
         setGone(R.id.dialogStatisticsPoints);
         setVisible(R.id.mainScreen);
     }
@@ -976,7 +996,7 @@ public class XSkat extends Activity {
     public void clickedStatPointsLess(View view) {
         StatResolution resolution = StatResolution.of(currentStatResolution).getLess();
         currentStatResolution = resolution.value();
-        di_statistics(resolution);
+        di_pointStatistics(resolution);
         showDialogFromMenu(R.id.dialogStatisticsPoints);
         checkStatPointsButtons();
     }
@@ -984,9 +1004,24 @@ public class XSkat extends Activity {
     public void clickedStatPointsMore(View view) {
         StatResolution resolution = StatResolution.of(currentStatResolution).getMore();
         currentStatResolution = resolution.value();
-        di_statistics(resolution);
+        di_pointStatistics(resolution);
         showDialogFromMenu(R.id.dialogStatisticsPoints);
         checkStatPointsButtons();
+    }
+
+    public void clickedStatGamesPlayerLeft(View view) {
+        currentPlayerStat = Player.prevPlayerForStatistic(currentPlayerStat);
+        di_gameStatistics(currentPlayerStat);
+    }
+
+    public void clickedStatGamesPlayerRight(View view) {
+        currentPlayerStat = Player.nextPlayerForStatistic(currentPlayerStat);
+        di_gameStatistics(currentPlayerStat);
+    }
+
+    public void clickedNextStat(View view) {
+        showDialogFromMenu(R.id.dialogStatisticsGame);
+        di_gameStatistics(currentPlayerStat);
     }
 
     public void clickedLoeschenJa(View view) {
@@ -1306,17 +1341,31 @@ public class XSkat extends Activity {
         playramsch = prefs.getInt("playramsch", 0);
         playsramsch = prefs.getInt("playsramsch", 0);
         rskatloser = prefs.getInt("rskatloser", 0);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) {
             hints[i] = prefs.getBoolean("hints" + i, false);
-        for (int i = 0; i < 3; i++)
+        }
+        for (int i = 0; i < 3; i++) {
             strateg[i] = prefs.getInt("strateg" + i, 0);
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 2; j++)
-                nimmstich[i][j] = prefs.getInt("nimmstich" + i + "." + j,
-                        j == 0 ? 101 : 0);
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 2; j++) {
+                nimmstich[i][j] = prefs.getInt("nimmstich" + i + "." + j, j == 0 ? 101 : 0);
+            }
+        }
+
+        initStatisticsArrays();
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 121; ++j) {
-                pointsStatistic[i][j] = prefs.getInt("p_" + i + "_"+ j, 0);
+                pointsStatistic[i][j] = prefs.getInt("p_" + i + "_" + j, 0);
+            }
+        }
+        for (int i = 0; i < 7; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                for (int k = 0; k < 3; ++k) {
+                    for (int l = 0; l < 2; ++l) {
+                        gameStatistic[i][j][k][l] = prefs.getInt("g_" + i + "_" + j + "_" + k + "_" + l, 0);
+                    }
+                }
             }
         }
         animSpeed = prefs.getInt("animSpeed", 0);
@@ -1808,10 +1857,20 @@ public class XSkat extends Activity {
 
         setDeselectedAndSize(R.id.buttonStatPointsLess);
         setDeselectedAndSize(R.id.buttonStatPointsMore);
-        setDeselectedAndSize(R.id.buttonStatPointsOK);
+        setDeselectedAndSize(R.id.buttonStatNextStat);
         setDeselectedAndSize(R.id.buttonStatPointsLoeschen);
+
+        setDeselectedAndSize(R.id.buttonStatPointsOK);
+        setDeselectedAndSize(R.id.buttonStatGamesLeft);
+        setDeselectedAndSize(R.id.buttonStatGamesRight);
+        setDeselectedAndSize(R.id.buttonStatPointsLoeschen_2);
+
         setText(R.id.buttonStatPointsOK, getTranslation(Translations.XT_Weiter));
+        setText(R.id.buttonStatNextStat, getTranslation(Translations.XT_Weiter));
         setText(R.id.buttonStatPointsLoeschen, getTranslation(Translations.XT_Loeschen));
+        setText(R.id.buttonStatPointsLoeschen_2, getTranslation(Translations.XT_Loeschen));
+        setText(R.id.buttonStatGamesLeft, "<");
+        setText(R.id.buttonStatGamesRight, ">");
 
         setTitleTextSize(R.id.dialogLoeschenL1);
         setTextSize(R.id.dialogLoeschenL2);
@@ -1823,6 +1882,15 @@ public class XSkat extends Activity {
         setText(R.id.dialogLoeschenL3, getTranslation(Translations.XT_und_Liste));
         setText(R.id.buttonLoeschenJa, getTranslation(Translations.XT_Ja));
         setText(R.id.buttonLoeschenNein, getTranslation(Translations.XT_Nein));
+
+        setTitleTextSize(R.id.dialogLoeschenS1);
+        setTextSize(R.id.dialogLoeschenS2);
+        setDeselectedAndSize(R.id.buttonLoeschenJa2);
+        setDeselectedAndSize(R.id.buttonLoeschenNein2);
+        setText(R.id.dialogLoeschenS1, getTranslation(Translations.XT_Loesche));
+        setText(R.id.dialogLoeschenS2, getTranslation(Translations.XT_MenuStatistics)+"?");
+        setText(R.id.buttonLoeschenJa2, getTranslation(Translations.XT_Ja));
+        setText(R.id.buttonLoeschenNein2, getTranslation(Translations.XT_Nein));
 
         setTitleTextSize(R.id.dialogCP1);
         setTextSize(R.id.dialogCP2);
@@ -2063,6 +2131,9 @@ public class XSkat extends Activity {
         findViewById(id).setVisibility(View.GONE);
     }
 
+    /**
+     * Add here all dialogs that you have created in /res/layout/dialog*.xml
+     */
     void setDialogsGone() {
         setGone(R.id.dialogCopyright);
         setGone(R.id.dialogOptions);
@@ -2072,6 +2143,8 @@ public class XSkat extends Activity {
         setGone(R.id.dialogStich);
         setGone(R.id.dialogWiederholen);
         setGone(R.id.dialogStatisticsPoints);
+        setGone(R.id.dialogStatisticsGame);
+        setGone(R.id.dialogStatsLoeschen);
     }
 
     void initHandStr() {
@@ -2785,7 +2858,7 @@ public class XSkat extends Activity {
     boolean mes3;
     boolean mes4;
     boolean ndichtw;
-    boolean nullv;
+    boolean nullv; // indicates whether the null game was lost (=true)
     boolean oldrules;
     boolean ouveang;
     boolean resumebock;
@@ -3018,10 +3091,17 @@ public class XSkat extends Activity {
     int currLang;
     int[] strateg = new int[3];
     int animSpeed = 0;
-    int[][] pointsStatistic = new int[3][121];
+    int[][] pointsStatistic;
+    int[][][][] gameStatistic; // Farbe/Colour | Normal/Hand/Ouvert/OuvertHand | Player/Androido/Androida | Won/Lost
     int currentStatResolution = StatResolution.MAXIMAL.value();
+    Player currentPlayerStat = null;
     int[][] sgewoverl = new int[3][2];
     int[][] splsum = new int[3][3];
+
+    private void initStatisticsArrays() {
+        pointsStatistic = new int[3][121];
+        gameStatistic = new int[7][4][3][2]; // Farbe/Colour | Normal/Hand/Ouvert/OuvertHand | Player/Androido/Androida | Won/Lost
+    }
 
     static class structsplist {
         int s, e;
@@ -4533,6 +4613,15 @@ public class XSkat extends Activity {
                 editor.putInt("p_" + i + "_" + j, pointsStatistic[i][j]);
             }
         }
+        for (int i = 0; i < 7; ++i) {
+            for(int j = 0; j < 4; ++j) {
+                for(int k = 0; k < 3; ++k) {
+                    for(int l = 0; l < 2; ++l) {
+                        editor.putInt("g_"+i+"_"+j+"_"+k+"_"+l, gameStatistic[i][j][k][l]);
+                    }
+                }
+            }
+        }
         editor.commit();
     }
 
@@ -4713,8 +4802,18 @@ public class XSkat extends Activity {
             }
         }
         calc_result();
+        // update point statistics
         if (trumpf >= 0 && trumpf <= 4) {
             pointsStatistic[spieler][stsum]++;
+        }
+        // update game statistics
+        if (GameType.isRamsch(trumpf)) {
+            for (i = 0 ; i < 3; ++i) {
+                // We count one game lost for one player and won for the other two
+                gameStatistic[trumpf + 1][getGameType()][i][spieler != i ? 0 : 1]++;
+            }
+        } else {
+            gameStatistic[trumpf + 1][getGameType()][spieler][wasGameWon() ? 0 : 1]++;
         }
         set_prot();
         prot1.assign(prot2);
@@ -4727,6 +4826,26 @@ public class XSkat extends Activity {
         phase = RESULT;
         di_result(bockinc);
         nextgame();
+    }
+
+    private boolean wasGameWon() {
+        if (GameType.isNullGame(trumpf)) {
+            return !nullv;
+        }
+        return stsum > 60;
+    }
+
+    private int getGameType() {
+        if (handsp && ouveang) {
+            return 3;
+        }
+        if (handsp) {
+            return 1;
+        }
+        if (ouveang) {
+            return 2;
+        }
+        return 0;
     }
 
     void do_next() {
@@ -7500,7 +7619,7 @@ public class XSkat extends Activity {
     /**
      * Build the statistics table for reached points in one game.
      */
-    void di_statistics(StatResolution resolution) {
+    void di_pointStatistics(StatResolution resolution) {
         TextView viewById = findViewById(R.id.textStatisticsPoints);
         viewById.setText(getTranslation(Translations.XT_PointDistribution));
         TableLayout tableHeader = findViewById(R.id.table_main_header);
@@ -7509,6 +7628,15 @@ public class XSkat extends Activity {
         TableLayout tableBody = findViewById(R.id.table_main);
         List<Pair<String, int[]>> compute = PointStatistics.compute(resolution, pointsStatistic);
         PointStatistics.createTable(this, tableBody, compute);
+    }
+
+    void di_gameStatistics(Player player) {
+        TextView viewById = findViewById(R.id.textStatisticsGame);
+        String name = player != null ? getTranslation(player.getTranslation()) : getTranslation(Translations.XT_All);
+        viewById.setText(getTranslation(Translations.XT_GameStatistics, name));
+
+        TableLayout tableBody = findViewById(R.id.table_main_2);
+        GameStatistics.createTable(this, tableBody, gameStatistic, currentPlayerStat == null ? -1 : currentPlayerStat.ordinal(), currLang);
     }
 
     void di_liste(int sn, boolean ini) {
@@ -8266,6 +8394,14 @@ public class XSkat extends Activity {
     }
 
     private String getTranslation(int key) {
-        return Translations.getTranslation(key, currLang);
+        return getTranslation(key, (Object[])null);
+    }
+
+    private String getTranslation(int key, Object... args) {
+        String translation = Translations.getTranslation(key, currLang);
+        if (args == null || args.length == 0) {
+            return translation;
+        }
+        return MessageFormat.format(translation, args);
     }
 }

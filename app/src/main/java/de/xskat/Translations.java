@@ -136,7 +136,13 @@ public class Translations {
             {"https://github.com/rnauber/xskat-android", "https://github.com/rnauber/xskat-android"}, // XT_github_xskat / 124
             {"Statistiken", "Statistics"}, // XT_MenuStatistics / 125
             {"Summe", "Sum"}, // XT_Sum / 126
-            {"Verteilung der erreichten Punkte", "Distribution of reached points"} // XT_PointDistribution / 127
+            {"Verteilung der erreichten Punkte", "Distribution of reached points"}, // XT_PointDistribution / 127
+            {"Spielstatistik für {0}", "Game statistic for {0}"}, // XT_GameStatistics / 128
+            {"alle", "all"}, // XT_All / 129
+            {"(G/V)", "(W/L)"}, // XT_WonLost / 130
+            {"Insgesamt", "Total"}, // XT_Total / 131
+            {"Normal", "Normal"}, // XT_Normal / 132
+            {"Ouv. H.", "Ouv. H."}, // XT_Ouvert_Hand / 133
     };
 
     public static final int XT_Null = 0;
@@ -267,6 +273,12 @@ public class Translations {
     public static final int XT_MenuStatistics = 125;
     public static final int XT_Sum = 126;
     public static final int XT_PointDistribution = 127;
+    public static final int XT_GameStatistics = 128;
+    public static final int XT_All = 129;
+    public static final int XT_WonLost = 130;
+    public static final int XT_Total= 131;
+    public static final int XT_Normal = 132;
+    public static final int XT_Ouvert_Hand = 133;
 
     public static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];

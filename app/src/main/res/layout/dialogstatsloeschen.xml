@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogStatsLoeschen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/dialogLoeschenS1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="#Lösche" />
+    
+    <TextView
+        android:id="@+id/dialogLoeschenS2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="#Spielstand" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/buttonLoeschenJa2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:onClick="clickedStatPointsLoeschen"
+            android:text="#Ja" />
+
+        <Button
+            android:id="@+id/buttonLoeschenNein2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:onClick="clickedStatPointsLoeschenNein"
+            android:text="#Nein" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:onClick="clickedSpace"
+        android:visibility="invisible" />
+
+</LinearLayout>
