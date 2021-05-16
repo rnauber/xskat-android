@@ -1,0 +1,3 @@
+* Fix for to fast card animation
+* Fix for no game was pre-selected for player
+* Added another statistics page which shows which game types are played most with many more details

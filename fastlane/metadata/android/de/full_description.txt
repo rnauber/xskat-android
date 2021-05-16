@@ -1,0 +1,11 @@
+Das berühmte deutsche Kartenspiel Skat von Gunter Gerhardt.
+
+Features:
+
+* Einzelspielermodus
+* Deutsche und Englische Übersetzung
+* Deutsches oder Französisches Blatt
+* Fünf verschiedene Spielerstärken
+* Inoffizielle Regeln: Ramsch, Kontra & Re
+* Spielzugvorschläge und Möglichkeit zum Wiederholen des Spiels
+* Verschiedene Statistiken zu den gespielten Partien.
