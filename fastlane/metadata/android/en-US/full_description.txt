@@ -1,0 +1,12 @@
+This is the famous German card game "Skat" by Gunter Gerhardt.
+
+Features:
+
+* Single player mode
+* Game lists and logs
+* English or German translation
+* German or French suited cards
+* Selectable playing strength
+* Variations: Ramsch, Kontra & Re
+* Game hints and replay
+* Some statistics over the played games
