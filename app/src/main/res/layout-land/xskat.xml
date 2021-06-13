@@ -228,6 +228,8 @@
             <include layout="@layout/dialogliste" />
 
             <include layout="@layout/dialogstatisticspoints" />
+            <include layout="@layout/dialogstatisticsgames" />
+            <include layout="@layout/dialogstatsloeschen" />
 
             <include layout="@layout/dialogloeschen" />
 
