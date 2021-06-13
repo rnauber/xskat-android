@@ -7,8 +7,8 @@ android {
         applicationId "de.xskat"
         minSdkVersion 3
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.6.fdroid"
+        versionCode 17
+        versionName "1.7.fdroid"
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_6
             targetCompatibility JavaVersion.VERSION_1_6
