@@ -1774,6 +1774,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.sp2st7);
         setTextSize(R.id.sp2st8);
         setTextSize(R.id.sp2st9);
+        setTextSize(R.id.sumhead);
         setTextSize(R.id.sum0);
         setTextSize(R.id.sum1);
         setTextSize(R.id.sum2);
@@ -7676,14 +7677,19 @@ public class XSkat extends Activity {
             b0 = b1 = b2 = false;
         }
         // the header of the alone player get bold
-        TextView v = (TextView) findViewById(R.id.sp0head);
+        TextView v = findViewById(R.id.sp0head);
         v.setTypeface(null, b0 ? Typeface.BOLD : Typeface.NORMAL);
-        v = (TextView) findViewById(R.id.sp1head);
+        v = findViewById(R.id.sp1head);
         v.setTypeface(null, b1 ? Typeface.BOLD : Typeface.NORMAL);
-        v = (TextView) findViewById(R.id.sp2head);
+        v = findViewById(R.id.sp2head);
         v.setTypeface(null, b2 ? Typeface.BOLD : Typeface.NORMAL);
-        v = (TextView) findViewById(R.id.sumhead);
+        v = findViewById(R.id.sumhead);
         v.setTypeface(null, Typeface.NORMAL);
+        if (protsort[sn] || prot1.trumpf < 0) {
+            v.setText("");
+        } else {
+            v.setText(cardValues[prot2.skat[1][0] & 7] + cardValues[prot2.skat[1][1] & 7] + " / 0");
+        }
 
         int[] points = new int[]{0, 0, 0};
         int skat = cardValues[prot1.skat[1][0] & 7] + cardValues[prot1.skat[1][1] & 7];
@@ -7706,7 +7712,7 @@ public class XSkat extends Activity {
                             e |= 1;
                     }
                 }
-                TextView tv = (TextView) findViewById(spMat[s][i]);
+                TextView tv = findViewById(spMat[s][i]);
                 tv.setTypeface(null, (e & 1) != 0 ? Typeface.BOLD
                         : Typeface.NORMAL);
                 if ((e & 4) != 0) {
@@ -7737,7 +7743,7 @@ public class XSkat extends Activity {
                 }
                 tv.setText(txt);
             }
-            TextView tv = (TextView) findViewById(spMat[3][i]);
+            TextView tv = findViewById(spMat[3][i]);
             if (tv != null) {
                 int trick = cardValues[stiche[i][0] & 7] + cardValues[stiche[i][1] & 7] + cardValues[stiche[i][2] & 7];
                 points[prot1.gemacht[i]] += trick;
