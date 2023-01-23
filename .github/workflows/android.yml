@@ -32,8 +32,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: XTESTX
-        release_name: XTESTX
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
         draft: true
         prerelease: false
 
@@ -42,9 +42,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: xskat-android/app/build/outputs/apk/xskat-debug.apk
+        asset_path: xskat-android/build/outputs/apk/xskat-debug.apk
         asset_name: xskat-debug.apk
-        asset_content_type: application/zip
+        asset_content_type: application/vnd.android.package-archive   
 
     - uses: eregon/publish-release@v1
       env:
