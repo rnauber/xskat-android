@@ -42,7 +42,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: xskat-android/build/outputs/apk/xskat-debug.apk
+        asset_path: app/build/outputs/apk/debug/app-debug.apk
         asset_name: xskat-debug.apk
         asset_content_type: application/vnd.android.package-archive   
 
