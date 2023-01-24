@@ -341,8 +341,7 @@
         android:layout_height="0dp"
         android:layout_weight="2" >
 
-        <Button
-            android:layout_width="0dp"
+        <Button android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="clickedSpace"
@@ -353,27 +352,60 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="#Im Skat ist: " />
-
         <TextView
             android:id="@+id/textImSkatIst2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Kreuz 7" />
-
         <TextView
             android:id="@+id/textImSkatIst3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=", " />
-
         <TextView
             android:id="@+id/textImSkatIst4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Pik 8" />
 
-        <Button
-            android:layout_width="0dp"
+        <Button android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" >
+        <Button android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="clickedSpace"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textGedrueckt1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="#Gedrueckt war: " />
+        <TextView
+            android:id="@+id/textGedrueckt2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Kreuz 7" />
+        <TextView
+            android:id="@+id/textGedrueckt3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=", " />
+        <TextView
+            android:id="@+id/textGedrueckt4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Pik 8" />
+
+        <Button android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="clickedSpace"

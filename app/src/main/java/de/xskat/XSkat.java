@@ -1789,6 +1789,10 @@ public class XSkat extends Activity {
         setTextSize(R.id.textImSkatIst2);
         setTextSize(R.id.textImSkatIst3);
         setTextSize(R.id.textImSkatIst4);
+        setTextSize(R.id.textGedrueckt1);
+        setTextSize(R.id.textGedrueckt2);
+        setTextSize(R.id.textGedrueckt3);
+        setTextSize(R.id.textGedrueckt4);
         setDeselectedAndSize(R.id.buttonProtoListe);
         setDeselectedAndSize(R.id.buttonProtoOK);
         setDeselectedAndSize(R.id.buttonProtoPfeil);
@@ -7778,26 +7782,38 @@ public class XSkat extends Activity {
                 }
             }
         }
-        im_skat(protsort[sn] ? 0 : 1);
+        String textInSkatWas = getTranslation(Translations.XT_Im_Skat) + " " + getTranslation(Translations.XT_war) + ": ";
+        im_skat(textInSkatWas, 0, R.id.textImSkatIst1, R.id.textImSkatIst2, R.id.textImSkatIst4);
+        if(prot1.handsp) {
+            TextView tv = findViewById(R.id.textGedrueckt1);
+            tv.setText("Hand gespielt");
+            tv = findViewById(R.id.textGedrueckt2);
+            tv.setText("");
+            tv = findViewById(R.id.textGedrueckt3);
+            tv.setText("");
+            tv = findViewById(R.id.textGedrueckt4);
+            tv.setText("");
+        } else {
+            String textCardsPutDown = getTranslation(Translations.XT_Gedrueckt) + ": ";
+            im_skat(textCardsPutDown, 1, R.id.textGedrueckt1, R.id.textGedrueckt2, R.id.textGedrueckt4);
+        }
     }
 
-    void im_skat(int i) {
-        String s = getTranslation(Translations.XT_Im_Skat) + " " + (i == 0 ? getTranslation(Translations.XT_war) : getTranslation(Translations.XT_ist))
-                + ": ";
-        TextView tv = (TextView) findViewById(R.id.textImSkatIst1);
-        tv.setText(s);
-        s = gameName(prot1.skat[i][0] >> 3);
+    void im_skat(String text, int mode, int elem1, int elem2, int elem4) {
+        TextView tv = findViewById(elem1);
+        tv.setText(text);
+        String s = gameName(prot1.skat[mode][0] >> 3);
         s += " ";
-        s += cardVal(prot1.skat[i][0] & 7);
-        tv = (TextView) findViewById(R.id.textImSkatIst2);
+        s += cardVal(prot1.skat[mode][0] & 7);
+        tv = findViewById(elem2);
         tv.setText(s);
-        tv.setTextColor(Color.parseColor(suitCol(prot1.skat[i][0] >> 3)));
-        s = gameName(prot1.skat[i][1] >> 3);
+        tv.setTextColor(Color.parseColor(suitCol(prot1.skat[mode][0] >> 3)));
+        s = gameName(prot1.skat[mode][1] >> 3);
         s += " ";
-        s += cardVal(prot1.skat[i][1] & 7);
-        tv = (TextView) findViewById(R.id.textImSkatIst4);
+        s += cardVal(prot1.skat[mode][1] & 7);
+        tv = findViewById(elem4);
         tv.setText(s);
-        tv.setTextColor(Color.parseColor(suitCol(prot1.skat[i][1] >> 3)));
+        tv.setTextColor(Color.parseColor(suitCol(prot1.skat[mode][1] >> 3)));
     }
 
     void di_proto(int sn, boolean ini, boolean log) {
