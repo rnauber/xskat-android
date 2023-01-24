@@ -7784,9 +7784,20 @@ public class XSkat extends Activity {
         }
         String textInSkatWas = getTranslation(Translations.XT_Im_Skat) + " " + getTranslation(Translations.XT_war) + ": ";
         im_skat(textInSkatWas, 0, R.id.textImSkatIst1, R.id.textImSkatIst2, R.id.textImSkatIst4);
-        if(prot1.handsp) {
+        if (prot1.handsp) {
+            // DRY: Don't repeat yourself
             TextView tv = findViewById(R.id.textGedrueckt1);
             tv.setText(getTranslation(Translations.XT_Hand_gespielt));
+            tv = findViewById(R.id.textGedrueckt2);
+            tv.setText("");
+            tv = findViewById(R.id.textGedrueckt3);
+            tv.setText("");
+            tv = findViewById(R.id.textGedrueckt4);
+            tv.setText("");
+        } else if (GameType.isRamsch(prot1.trumpf)) {
+            // don't show the info when Ramsch
+            TextView tv = findViewById(R.id.textGedrueckt1);
+            tv.setText("");
             tv = findViewById(R.id.textGedrueckt2);
             tv.setText("");
             tv = findViewById(R.id.textGedrueckt3);
@@ -7796,6 +7807,8 @@ public class XSkat extends Activity {
         } else {
             String textCardsPutDown = getTranslation(Translations.XT_Gedrueckt) + ": ";
             im_skat(textCardsPutDown, 1, R.id.textGedrueckt1, R.id.textGedrueckt2, R.id.textGedrueckt4);
+            TextView tv = findViewById(R.id.textGedrueckt3);
+            tv.setText(", ");
         }
     }
 
