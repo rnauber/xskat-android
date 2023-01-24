@@ -7786,7 +7786,7 @@ public class XSkat extends Activity {
         im_skat(textInSkatWas, 0, R.id.textImSkatIst1, R.id.textImSkatIst2, R.id.textImSkatIst4);
         if(prot1.handsp) {
             TextView tv = findViewById(R.id.textGedrueckt1);
-            tv.setText("Hand gespielt");
+            tv.setText(getTranslation(Translations.XT_Hand_gespielt));
             tv = findViewById(R.id.textGedrueckt2);
             tv.setText("");
             tv = findViewById(R.id.textGedrueckt3);

@@ -144,6 +144,7 @@ public class Translations {
             {"Normal", "Normal"}, // XT_Normal / 132
             {"Ouv. H.", "Ouv. H."}, // XT_Ouvert_Hand / 133
             {"Gedrückt", "Cards put down"}, // XT_Gedrueckt / 134
+            {"Hand gespielt", "Played hand"} // XT_Hand_gespielt / 135
     };
 
     public static final int XT_Null = 0;
@@ -281,6 +282,7 @@ public class Translations {
     public static final int XT_Normal = 132;
     public static final int XT_Ouvert_Hand = 133;
     public static final int XT_Gedrueckt = 134;
+    public static final int XT_Hand_gespielt = 135;
 
     public static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];
