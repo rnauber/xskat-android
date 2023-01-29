@@ -1291,16 +1291,16 @@ public class XSkat extends Activity {
     final int[][] liMat = {
             { R.id.li0sp0, R.id.li0sp1, R.id.li0sp2, R.id.li0sp3, R.id.li0sp4,
                     R.id.li0sp5, R.id.li0sp6, R.id.li0sp7, R.id.li0sp8,
-                    R.id.li0sp9, R.id.li0foot },
+                    R.id.li0sp9, R.id.li0foot, R.id.li0foot2 },
             { R.id.li1sp0, R.id.li1sp1, R.id.li1sp2, R.id.li1sp3, R.id.li1sp4,
                     R.id.li1sp5, R.id.li1sp6, R.id.li1sp7, R.id.li1sp8,
-                    R.id.li1sp9, R.id.li1foot },
+                    R.id.li1sp9, R.id.li1foot,R.id.li1foot2 },
             { R.id.li2sp0, R.id.li2sp1, R.id.li2sp2, R.id.li2sp3, R.id.li2sp4,
                     R.id.li2sp5, R.id.li2sp6, R.id.li2sp7, R.id.li2sp8,
-                    R.id.li2sp9, R.id.li2foot },
+                    R.id.li2sp9, R.id.li2foot, R.id.li2foot2 },
             { R.id.li3sp0, R.id.li3sp1, R.id.li3sp2, R.id.li3sp3, R.id.li3sp4,
                     R.id.li3sp5, R.id.li3sp6, R.id.li3sp7, R.id.li3sp8,
-                    R.id.li3sp9, R.id.li3foot } };
+                    R.id.li3sp9, R.id.li3foot,R.id.li3foot2 } };
     final String[] suitColTU = { "#d49c16", "#d41616", "#169c16", "#161616" };
     final String[] suitColFR = { "#d41616", "#d41616", "#161616", "#161616" };
     final String[] cardValFR = { "A", "10", "K", "D", "B", "9", "8", "7" };
@@ -1810,6 +1810,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.li0sp8);
         setTextSize(R.id.li0sp9);
         setTextSize(R.id.li0foot);
+        setTextSize(R.id.li0foot2);
         setTextSize(R.id.li1head);
         setTextSize(R.id.li1sp0);
         setTextSize(R.id.li1sp1);
@@ -1822,6 +1823,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.li1sp8);
         setTextSize(R.id.li1sp9);
         setTextSize(R.id.li1foot);
+        setTextSize(R.id.li1foot2);
         setTextSize(R.id.li2head);
         setTextSize(R.id.li2sp0);
         setTextSize(R.id.li2sp1);
@@ -1834,6 +1836,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.li2sp8);
         setTextSize(R.id.li2sp9);
         setTextSize(R.id.li2foot);
+        setTextSize(R.id.li2foot2);
         setTextSize(R.id.li3head);
         setTextSize(R.id.li3sp0);
         setTextSize(R.id.li3sp1);
@@ -1846,6 +1849,7 @@ public class XSkat extends Activity {
         setTextSize(R.id.li3sp8);
         setTextSize(R.id.li3sp9);
         setTextSize(R.id.li3foot);
+        setTextSize(R.id.li3foot2);
         setDeselectedAndSize(R.id.buttonListeOK);
         setDeselectedAndSize(R.id.buttonListeLoeschen);
         setText(R.id.li0head, getTranslation(Translations.XT_Spieler));
@@ -7606,10 +7610,19 @@ public class XSkat extends Activity {
             }
         }
         for (k = 0; k < 3; k++) {
-            v = (TextView) findViewById(liMat[k][10]);
+            v = findViewById(liMat[k][10]);
             txt = cgv[k][0] + "/" + cgv[k][1];
             v.setText(txt);
-            v = (TextView) findViewById(liMat[k][last[k]]);
+            v = findViewById(liMat[k][11]);
+            if (cgv[k][0] == 0 && cgv[k][1] == 0) {
+                txt = "";
+            } else if (cgv[k][0] == 0) {
+                txt = "0%";
+            } else {
+                txt = ((int) ((cgv[k][0] * 100.0 / (cgv[k][0] + cgv[k][1])) + 0.5)) + "%";
+            }
+            v.setText(txt);
+            v = findViewById(liMat[k][last[k]]);
             v.setTypeface(null, Typeface.BOLD);
         }
     }

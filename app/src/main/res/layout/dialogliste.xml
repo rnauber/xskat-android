@@ -99,6 +99,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="0/0" />
+            <TextView
+                android:id="@+id/li0foot2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="0/0" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,6 +192,12 @@
 
             <TextView
                 android:id="@+id/li1foot"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="0/0" />
+            <TextView
+                android:id="@+id/li1foot2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -281,6 +293,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="0/0" />
+            <TextView
+                android:id="@+id/li2foot2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="0/0" />
         </LinearLayout>
 
         <LinearLayout
@@ -372,6 +390,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="#G/V" />
+            <TextView
+                android:id="@+id/li3foot2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="%" />
         </LinearLayout>
     </LinearLayout>
 
