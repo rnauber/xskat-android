@@ -6,7 +6,7 @@ public class Translations {
     // --------------------------------------------------------------------------------------
 
     private final static String[][] TRANSLATIONS = { // DE, EN
-            {"Null", "Null"}, // XT_Null
+            {"Null", "Null"}, // XT_Null / 0
             {"Karo", "Diamond"}, // XT_Karo
             {"Herz", "Heart"}, // XT_Herz
             {"Pik", "Spade"}, // XT_Pik
@@ -16,10 +16,10 @@ public class Translations {
             {"Sortiere für Null", "Sort for Null"}, // XT_Sortiere_fuer_Null
             {"Sortiere normal", "Sort normally"}, // XT_Sortiere_normal
             {"Gereizt bis", "It was bid"}, // XT_Gereizt_bis
-            {"Androido", "Androido"}, // XT_Androido
+            {"Androido", "Androido"}, // XT_Androido / 10
             {"Androida", "Androida"}, // XT_Androida
             {"spielt", "plays"}, // XT_spielt
-            {"Hand", "Hand"}, // XT_Hand
+            {"Hand", "Hand"}, // XT_Hand / 13
             {"für", "for"}, // XT_fuer
             {"Spitze", "Spitze"}, // XT_Spitze
             {"Annehmen", "Accept"}, // XT_Annehmen
@@ -143,6 +143,8 @@ public class Translations {
             {"Insgesamt", "Total"}, // XT_Total / 131
             {"Normal", "Normal"}, // XT_Normal / 132
             {"Ouv. H.", "Ouv. H."}, // XT_Ouvert_Hand / 133
+            {"Gedrückt", "Cards put down"}, // XT_Gedrueckt / 134
+            {"Hand gespielt", "Played hand"} // XT_Hand_gespielt / 135
     };
 
     public static final int XT_Null = 0;
@@ -166,7 +168,8 @@ public class Translations {
     public static final int XT_Passe = 18;
     public static final int XT_Im_Skat = 19;
     public static final int XT_war = 20;
-    public static final int XT_ist = 21;
+    @Deprecated
+    private static final int XT_ist = 21;
     public static final int XT_Eine_Jungfrau = 22;
     public static final int XT_Durchmarsch = 23;
     public static final int XT_Ueberreizt = 24;
@@ -279,6 +282,8 @@ public class Translations {
     public static final int XT_Total= 131;
     public static final int XT_Normal = 132;
     public static final int XT_Ouvert_Hand = 133;
+    public static final int XT_Gedrueckt = 134;
+    public static final int XT_Hand_gespielt = 135;
 
     public static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];
