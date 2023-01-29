@@ -7610,7 +7610,7 @@ public class XSkat extends Activity {
             }
         }
         for (k = 0; k < 3; k++) {
-            v = (TextView) findViewById(liMat[k][10]);
+            v = findViewById(liMat[k][10]);
             txt = cgv[k][0] + "/" + cgv[k][1];
             v.setText(txt);
             v = findViewById(liMat[k][11]);
@@ -7619,10 +7619,10 @@ public class XSkat extends Activity {
             } else if (cgv[k][0] == 0) {
                 txt = "0%";
             } else {
-                txt = ((int)(cgv[k][0] * 100.0 / (cgv[k][0]  + cgv[k][1]))) + "%";
+                txt = ((int) ((cgv[k][0] * 100.0 / (cgv[k][0] + cgv[k][1])) + 0.5)) + "%";
             }
             v.setText(txt);
-            v = (TextView) findViewById(liMat[k][last[k]]);
+            v = findViewById(liMat[k][last[k]]);
             v.setTypeface(null, Typeface.BOLD);
         }
     }
