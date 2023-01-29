@@ -168,7 +168,8 @@ public class Translations {
     public static final int XT_Passe = 18;
     public static final int XT_Im_Skat = 19;
     public static final int XT_war = 20;
-    public static final int XT_ist = 21;
+    @Deprecated
+    private static final int XT_ist = 21;
     public static final int XT_Eine_Jungfrau = 22;
     public static final int XT_Durchmarsch = 23;
     public static final int XT_Ueberreizt = 24;
