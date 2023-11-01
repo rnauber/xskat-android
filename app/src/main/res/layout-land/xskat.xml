@@ -246,6 +246,8 @@
             <include layout="@layout/dialogstich" />
 
             <include layout="@layout/dialogwiederholen" />
+
+            <include layout="@layout/dialogplaybyid" />
         </LinearLayout>
 
         <Button

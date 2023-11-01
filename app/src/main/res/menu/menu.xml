@@ -24,4 +24,8 @@
         android:id="@+id/menuStatistics"
         android:showAsAction="never"
         android:title="#Stats"/>
+    <item
+        android:id="@+id/menuReplayGameById"
+        android:showAsAction="never"
+        android:title="#Replay"/>
 </menu>

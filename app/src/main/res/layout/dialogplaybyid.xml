@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogPlayByBid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textEnterGameId"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:text="#Enter Game ID:"
+        android:textColor="#757575" />
+
+    <EditText
+        android:id="@+id/editTextGameId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="48dp"
+        android:autofillHints="#Game ID: a Base64 string"
+        android:ems="10"
+        android:hint="#Game ID, a Base64 string"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text=""
+        android:typeface="monospace" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonReturn"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="clickedReturn"
+            android:text="#Return" />
+        <Button
+            android:id="@+id/buttonPlayId"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="clickedPlayId"
+            android:text="#Play ID" />
+    </LinearLayout>
+</LinearLayout>

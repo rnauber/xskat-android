@@ -144,7 +144,12 @@ public class Translations {
             {"Normal", "Normal"}, // XT_Normal / 132
             {"Ouv. H.", "Ouv. H."}, // XT_Ouvert_Hand / 133
             {"Gedrückt", "Cards put down"}, // XT_Gedrueckt / 134
-            {"Hand gespielt", "Played hand"} // XT_Hand_gespielt / 135
+            {"Hand gespielt", "Played hand"}, // XT_Hand_gespielt / 135
+            {"Spiel per ID wiederholen", "Replay game by ID"}, // XT_MenuReplayGameById / 136
+            {"Game ID", "Game ID"}, //XT_EnterGameId / 137
+            {"Zurück", "Return"}, // XT_Return / 138
+            {"Starte Spiel", "Start game"}, // XT_PlayId / 139
+            {"Game ID, eine Base64 Zeichenkette", "Game ID, a Base64 string"}, // XT_GameIdBase64String / 140
     };
 
     public static final int XT_Null = 0;
@@ -284,6 +289,12 @@ public class Translations {
     public static final int XT_Ouvert_Hand = 133;
     public static final int XT_Gedrueckt = 134;
     public static final int XT_Hand_gespielt = 135;
+    public static final int XT_MenuReplayGameById = 136;
+
+    public static final int XT_EnterGameId = 137;
+    public static final int XT_Return = 138;
+    public static final int XT_PlayId = 139;
+    public static final int XT_GameIdBase64String = 140;
 
     public static String getTranslation(int key, int currentLanguage) {
         return TRANSLATIONS[key][currentLanguage];

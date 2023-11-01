@@ -181,9 +181,24 @@ public class XSkat extends Activity {
                 di_pointStatistics(StatResolution.of(currentStatResolution));
                 showDialogFromMenu(R.id.dialogStatisticsPoints);
                 return true;
+            case R.id.menuReplayGameById:
+                showDialogFromMenu(R.id.dialogPlayByBid);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private int textForSortingMenuItem() {
+        return sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal;
+    }
+
+    private boolean isLastTrickMenuItemAvailable() {
+        return phase == SPIELEN && stich > 1;
+    }
+
+    private boolean isSortingForNullAvailable() {
+        return phase < SPIELEN && trumpf != 5;
     }
 
     @Override
@@ -193,10 +208,11 @@ public class XSkat extends Activity {
         }
         createMenu(menu, R.id.menuAbout, Translations.XT_Ueber_XSkat, true);
         createMenu(menu, R.id.menuOptions, Translations.XT_Optionen, true);
-        createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, phase == SPIELEN && stich > 1);
-        createMenu(menu, R.id.menuSort, sort2[0] == 0 ? Translations.XT_Sortiere_fuer_Null : Translations.XT_Sortiere_normal, phase < SPIELEN && trumpf != 5);
+        createMenu(menu, R.id.menuLastTrick, Translations.XT_Letzter_Stich, isLastTrickMenuItemAvailable());
+        createMenu(menu, R.id.menuSort, textForSortingMenuItem(), isSortingForNullAvailable());
         createMenu(menu, R.id.menuList, Translations.XT_Liste, true);
         createMenu(menu, R.id.menuStatistics, Translations.XT_MenuStatistics, true);
+        createMenu(menu, R.id.menuReplayGameById, Translations.XT_MenuReplayGameById, phase == RESULT);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -1166,6 +1182,14 @@ public class XSkat extends Activity {
         }
     }
 
+    public void clickedReturn(View view) {
+
+    }
+
+    public void clickedPlayId(View view) {
+        //R.id.editTextText.
+    }
+
     // private
 
     boolean restart;
@@ -2065,14 +2089,23 @@ public class XSkat extends Activity {
         setDeselectedAndSize(R.id.buttonDruecken);
         setDeselectedAndSize(R.id.buttonFertig);
         setDeselectedAndSize(R.id.buttonWeiter);
+        setDeselectedAndSize(R.id.buttonPlayId);
+        setDeselectedAndSize(R.id.buttonReturn);
         setTextSize(R.id.textHS1);
         setTextSize(R.id.textHS2);
+        setTextSize(R.id.textEnterGameId);
+
         setText(R.id.buttonPasse, getTranslation(Translations.XT_Passe));
         setText(R.id.buttonDruecken, getTranslation(Translations.XT_Druecken));
         setText(R.id.buttonFertig, getTranslation(Translations.XT_Fertig));
         setText(R.id.buttonWeiter, getTranslation(Translations.XT_Weiter));
         setText(R.id.textHS1, getTranslation(Translations.XT_Display_irgendwo_antippen));
         setText(R.id.textHS2, getTranslation(Translations.XT_um_Stich_zu_entfernen));
+        setText(R.id.textEnterGameId, getTranslation(Translations.XT_EnterGameId));
+        setText(R.id.buttonReturn, getTranslation(Translations.XT_Return));
+        setText(R.id.buttonPlayId, getTranslation(Translations.XT_PlayId));
+        setText(R.id.editTextGameId, getTranslation(Translations.XT_GameIdBase64String));
+
         if (phase == REIZEN)
             initReizStr();
     }
